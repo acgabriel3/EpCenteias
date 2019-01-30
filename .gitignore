@@ -1,0 +1,12 @@
+﻿#pastas/arquivos gerados pelo Rproject
+avaliacao_de_sistemas/.Rproj.user
+avaliacao_de_sistemas/.Rhistory
+avaliacao_de_sistemas/.RData
+avaliacao_de_sistemas/.Ruserdata
+avaliacao_de_sistemas/Dengue_2013.csv
+avaliacao_de_sistemas/ZIKA_2016.dbf
+
+#os bancos de dados serão ignorados
+avaliacao_de_sistemas/dados/**
+avaliacao_de_sistemas/dicionario/**
+avaliacao_de_sistemas/exportacao/**

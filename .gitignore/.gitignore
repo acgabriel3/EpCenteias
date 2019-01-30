@@ -1,9 +1,0 @@
-#pastas/arquivos gerados pelo Rproject
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-
-#os bancos de dados serão ignorados
-avaliacao_de_sistemas/dados
-avaliacao_de_sistemas/dicionario
