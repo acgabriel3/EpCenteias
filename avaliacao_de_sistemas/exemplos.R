@@ -88,3 +88,13 @@ tabela <- filtro_mes_variavel(tabelaA = dengue_2007,
                               meses = c(1:12),
                               anos = c(2007),
                               indicador = completitude)
+
+
+#***
+#Exemplo de funcao de extratificacao por idade:
+
+result <- extratificacaoIdade(tabela = dengue2013, 
+                              coluna = dengue2013$DT_NASC, 
+                              coluna_eh_data_nascimento = TRUE, 
+                              nomesExtratos = c("<1", "1-4", "5-9", "10-19", "20-29", "30-29", "40-49", "50-59", "60-69", "70+")
+                              )

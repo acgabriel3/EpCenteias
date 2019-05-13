@@ -17,7 +17,7 @@ source("biblioteca/qualidade/completitude/completitude.R")
 #-Retorna uma tabela com a completitude de cada variavel da tabela
 #-Funciona para valores em branco e NA
 #-Tabela deve ser um data frame
-completitude_variaveis_de_uma_tabela <- function(tabela) { #tabela linhas = n tabela colunas = m
+completitude_variaveis_de_uma_tabela <- function(tabela, registrar = FALSE) { #tabela linhas = n tabela colunas = m
   
   numLinhas <- length(tabela) #complexidade m
   nomeColunas <- colnames(tabela) #complexidade m
@@ -32,6 +32,7 @@ completitude_variaveis_de_uma_tabela <- function(tabela) { #tabela linhas = n ta
     
   } #complexidade 4nm + mQuadrado
   
+  if(registrar)
   write.xlsx(tabVariavel_x_completitude, "completitude_variaveis.xlsx")
   
   return(tabVariavel_x_completitude)
@@ -52,18 +53,16 @@ completitude_relacionada <- function(variavel_de_referencia, variavel_para_avali
   variavel_de_referencia <- as.character(variavel_de_referencia) #complexidade n
   tabela <- data.frame(variavel_de_referencia, variavel_para_avaliacao) #complexidade n
   
-  linhas <- variavel_de_referencia == .Machine$integer.max #complexidade n
+  posicoes <- NULL
   
-  for(i in 1:length(valoresPadrao)) {
-    
-      linhas <- linhas | (variavel_de_referencia == as.character(valoresPadrao[i])) #complexidade 2n
-    
-  } #complexidade 2nm
-  
-  tabela <- tabela[linhas,] #complexidade n
+  for(i in valoresPadrao) {
+    posicoes <- c(posicoes, which(variavel_de_referencia == valoresPadrao)) #complexidade n
+  }
+
+  tabela <- tabela[posicoes,] #complexidade n
   
   
-  retorno <- completitude(tabela[,2])
+  retorno <- completitude(tabela[[2]])
   
   return(retorno)
-} #complexidade nm(chao de 2nm)
+} #complexidade n
