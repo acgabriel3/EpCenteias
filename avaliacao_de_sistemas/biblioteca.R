@@ -24,18 +24,13 @@
 library(dplyr)
 library(foreign)
 
+source('interface.R')
+
+interface(nomeInterface = "biblioteca", caule = TRUE)
 
 #***
 #LEITURA:
 #a ideia da leitura eh criar funcoes que facilitem a leitura de dados
-
-#dengue_2007 <- read.dbf("dados/DENGUE_2007.dbf")
-
-#for(i in 7:13) {
-
-#as.name(paste("dengue_200", i, sep = "")) <-  read.dbf(paste("dados/", "DENGUE_200", i, ".dbf", sep = ""))
-
-#} #Ainda nao funcionou
 
 #***
 #RESUMO
@@ -43,23 +38,23 @@ library(foreign)
 
 #***
 #FUNCIONAIS
-source("biblioteca/funcionais.R")
+# source("biblioteca/funcionais.R")
 
 #***
 #QUALIDADE
-source("biblioteca/qualidade.R")
+# source("biblioteca/qualidade.R")
 
 #***
 #OPORTUNIDADE
-source("biblioteca/oportunidade.R")
+# source("biblioteca/oportunidade.R")
 
 #***
 #REPRESENTATIVIDADE
-source("biblioteca/representatividade.R")
+# source("biblioteca/representatividade.R")
 
 #***
 #SENSIBILIDADE
-source("biblioteca/sensibilidade.R")
+# source("biblioteca/sensibilidade.R")
 
 #***
 #VALOR PREDITIVO POSITIVO
@@ -67,7 +62,7 @@ source("biblioteca/sensibilidade.R")
 
 #***
 #CONSISTENCIA
-source("biblioteca/consistencia.R")
+# source("biblioteca/consistencia.R")
 
 #***
 #Pensar que pode ser positivo para o entendimento renomear as funcoes mesmo que as mesmas facam a mesma coisa na pratica

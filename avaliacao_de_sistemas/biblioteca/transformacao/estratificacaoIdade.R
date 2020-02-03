@@ -8,6 +8,24 @@
 #coluna data de nascimento
 #-Se for uma coluna de idades inteiras, apenas cria a extratificacao segundo escolhido. Se for uma coluna de datas, calcula as idades e depois calcula os extratos.
 #-Retorna a mesma tabela com a variavel adicional de extratos agregada ao seu final
+ 
+#'  extratificacaoIdade
+#'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
+#' 
+#' @param tabela o dataframe em uso
+#' @param coluna a coluna que sera utilizada
+#' @param extratos a definicao dos extratos nos quais havera a divisao
+#' @param nomesExtratos os nomes dos extratos definidos
+#' @param nomeNovaColuna nome da coluna que sera adicionada ao dataframe com os novos extratos
+#' @param coluna_eh_data_nascimento informa se a coluna apresenta informacoes de data de nascimento
+#' @param formatoData informa o formato em que a data esta construida
+#' @example 
+#' Usar com os formatos padroes de idade do ibge 
+#' extratificacaoIdade(tabela = teste, coluna = 'caio')
+#' @export  
+
+
+
 extratificacaoIdade <- function(tabela, coluna, extratos = NULL, nomesExtratos = NULL, nomeNovaColuna = NULL, coluna_eh_data_nascimento = FALSE, formatoData = NULL) {
   
   resultado <- NULL

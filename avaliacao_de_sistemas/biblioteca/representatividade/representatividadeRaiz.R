@@ -3,7 +3,7 @@
 #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados 
 representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
   
-  variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
+  # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
   
   variavelFiltrada <- subset(variavel, variavel %in% valoresPadrao) #complexidade nm
   

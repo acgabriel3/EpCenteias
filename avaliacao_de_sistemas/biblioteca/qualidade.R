@@ -20,12 +20,14 @@
 
 #***
 #Funcoes irmas
-source("biblioteca/funcionais.R")
+# source("biblioteca/funcionais.R")
 
 #***
 #QUALIDADE
 
-source("biblioteca/qualidade/completitude.R")
+# source("biblioteca/qualidade/completitude.R")
+
+interface('qualidade')
 
 #***
 #Melhorar o nome da funcao logo abaixo
@@ -51,7 +53,7 @@ camposDistintos <- function(variavel, valoresPadrao, intervalo = FALSE
   } else {
     
     variavel <- as.character(variavel) #complexidade n
-    variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n
+    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n
     totalVariavel <- length(variavel) #complexidade n
     
   }

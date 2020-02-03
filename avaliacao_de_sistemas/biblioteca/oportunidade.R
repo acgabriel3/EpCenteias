@@ -1,6 +1,6 @@
 #***
 #Funcoes irmas
-source("biblioteca/funcionais.R")
+# source("biblioteca/funcionais.R")
 
 #***
 #OPORTUNIDADE

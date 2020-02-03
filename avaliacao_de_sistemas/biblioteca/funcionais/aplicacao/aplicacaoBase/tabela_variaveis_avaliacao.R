@@ -3,7 +3,7 @@
 
 library(xlsx)
 
-source("biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R")
+# source("biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R")
 
 
 #-Esta funcao recebe duas variaveis de mesmo tamanho de uma tabela ou duas, uma funcao da biblioteca de avalicao 
@@ -15,7 +15,7 @@ source("biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R")
 #-ValoresPadrao deve ser um vetor
 tabela_variaveis_avaliacao <- function(variavelBase, variavel, funcao, valoresPadrao = NULL) { #variavelBase = n = variavel, levels(variavelBase) = m, valoresPadrao = k
   
-  variavelBase <- valores_em_branco_para_NA(variavelBase) #complexidade n
+  # variavelBase <- valores_em_branco_para_NA(variavelBase) #complexidade n
   aux_variavel_base <- as.factor(variavelBase) #complexidade n
   distintos <- levels(aux_variavel_base) #complexidade n
   colunas <- c(distintos) 

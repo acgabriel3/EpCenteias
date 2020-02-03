@@ -16,7 +16,7 @@
 
 #***
 #Funcoes irmas
-source("biblioteca/funcionais.R")
+# source("biblioteca/funcionais.R")
 
 
 #-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a 
@@ -24,7 +24,7 @@ source("biblioteca/funcionais.R")
 #-retorna a porcentagem dos valores positivos que eram verdadeiros
 porcentagem_verdadeiro_positivo <- function(variavel, chavePositivo, chave_falso_positivo) {# variavel = n chavePositivo = 1 chave_falso_positivo = 1
   
-  variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
+  # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
   
   quantidadePositivo <- sum(variavel == chavePositivo, na.rm = TRUE) #complexidade n(chao de 2n)
   quantidade_falso_positivo <- sum(variavel == chave_falso_positivo, na.rm = TRUE) #complexidade n(chao de 2n)

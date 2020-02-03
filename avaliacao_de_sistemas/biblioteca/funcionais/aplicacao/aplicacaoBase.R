@@ -1,2 +1,4 @@
 
-source("biblioteca/funcionais/aplicacao/aplicacaoBase/tabela_variaveis_avaliacao.R")
+# source("biblioteca/funcionais/aplicacao/aplicacaoBase/tabela_variaveis_avaliacao.R")
+
+interface('aplicacaoBase')

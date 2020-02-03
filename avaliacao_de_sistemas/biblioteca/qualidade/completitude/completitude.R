@@ -8,9 +8,9 @@
 #-Variavel deve ser uma coluna de um data frame, ou um vetor
 completitude <- function(variavel) { #variavel = n
   
-  variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
+  # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
   
-  linhasVazias <- sum(is.na(variavel)) #complexidade n
+  linhasVazias <- sum(is.na(variavel), na.rm = TRUE) #complexidade n
   totalLinhas <- length(variavel) #complexidade n
   
   resultado <- (linhasVazias/totalLinhas) * 100 #complexidade n(chao de 2n)

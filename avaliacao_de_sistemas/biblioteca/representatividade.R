@@ -1,10 +1,12 @@
 #***
 #Funcoes irmas
-source("biblioteca/funcionais.R")
+# source("biblioteca/funcionais.R")
 
 #***
 #REPRESENTATIVIDADE
-source("biblioteca/representatividade/representatividadeRaiz.R")
+# source("biblioteca/representatividade/representatividadeRaiz.R")
+
+interface('representatividade')
 
 
 #-Esta funcao recebe duas colunas de uma tabela, que devem possuir tamanho igual. Tambem recebe dois vetores de valores possiveis na tabela.
@@ -15,8 +17,8 @@ representatividadeCondicionada <- function(colunaFiltro, valoresFiltro, colunaAl
     return("valores passados a funcao sao invalidos")
   } #complexidade 2n + t + j
   
-  colunaFiltro <- valores_em_branco_para_NA(variavel = colunaFiltro) #complexidade n
-  colunaAlvo <- valores_em_branco_para_NA(variavel = colunaAlvo) #complexidade n
+  # colunaFiltro <- valores_em_branco_para_NA(variavel = colunaFiltro) #complexidade n
+  # colunaAlvo <- valores_em_branco_para_NA(variavel = colunaAlvo) #complexidade n
   
   colunaFiltrada <- subset(colunaAlvo, colunaFiltro %in% valoresFiltro) #complexidade nt
   

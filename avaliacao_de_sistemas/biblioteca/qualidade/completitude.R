@@ -7,7 +7,9 @@ library(xlsx)
 #***
 #QUALIDADE
 
-source("biblioteca/qualidade/completitude/completitude.R")
+# source("biblioteca/qualidade/completitude/completitude.R")
+
+interface('completitude')
 
 
 #***
@@ -48,21 +50,35 @@ completitude_variaveis_de_uma_tabela <- function(tabela, registrar = FALSE) { #t
 #caractere na "variavel_de_referencia"
 #-Funciona para valores em branco e NA
 #-As variaveis devem advir de um data.frame
-completitude_relacionada <- function(variavel_de_referencia, variavel_para_avaliacao, valoresPadrao) { #variavel_de_referencia = n = variavel_para_avaliacao  valoresPadrao = m
+completitude_relacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
+                                                                             
+                                     ) { #variavel_de_referencia = n = variavel_para_avaliacao  valoresPadrao = m
   
-  variavel_de_referencia <- as.character(variavel_de_referencia) #complexidade n
-  tabela <- data.frame(variavel_de_referencia, variavel_para_avaliacao) #complexidade n
+  if(length(variaveis_de_referencia) != length(valoresPadrao) & !is.null(valoresPadrao)) {
+    return(print("cada coluna deve conter os seus proprios valores padrao"))
+  }
+  
+  for(i in (variaveis_de_referencia)) {
+    tabela[[i]] <- as.character(tabela[[i]]) #complexidade n 
+  }
   
   posicoes <- NULL
   
-  for(i in valoresPadrao) {
-    posicoes <- c(posicoes, which(variavel_de_referencia == valoresPadrao)) #complexidade n
+  if(!is.null(valoresPadrao)) {
+    
+    for(i in 1:length(variaveis_de_referencia)) {
+      posicoes <- c(posicoes, which(tabela[[variaveis_de_referencia[i]]] %in% valoresPadrao[[i]]))
+    }
+    
+    tabela <- tabela[unique(posicoes),] #complexidade n
+    
+  } else {
+    
+    tabela <- tabela[!is.na(tabela[[variaveis_de_referencia]]),] 
+      
   }
 
-  tabela <- tabela[posicoes,] #complexidade n
-  
-  
-  retorno <- completitude(tabela[[2]])
+  retorno <- completitude(tabela[[variavel_para_avaliacao]])
   
   return(retorno)
 } #complexidade n
