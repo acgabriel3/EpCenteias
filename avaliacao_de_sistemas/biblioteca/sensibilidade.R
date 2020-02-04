@@ -22,6 +22,14 @@
 #-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a 
 #uma confirmacao do caso verdadeira(chavePositivo), e a chave correspondente a um falso positivo(chave_falso_positivo)
 #-retorna a porcentagem dos valores positivos que eram verdadeiros
+
+#' porcentagem_verdadeiro_positivo
+#' @param variavel a variavel de um dataframe com os fatores investigados
+#' @param chavePositvo os fatores indicando quais são os fatores verdadeiramente positivos
+#' @param chave_falso_positivo os fatores indicando quais sao os fatores que representam casos aferidos erroneamente como positivos
+#' @example 
+#' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4") #supondo que 2 seja positivo e 4 seja falso positivo
+#' @return  retorna a porcentagem dos valores positivos que eram verdadeiros
 porcentagem_verdadeiro_positivo <- function(variavel, chavePositivo, chave_falso_positivo) {# variavel = n chavePositivo = 1 chave_falso_positivo = 1
   
   # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)

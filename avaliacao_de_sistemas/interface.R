@@ -110,6 +110,22 @@ interface <- function(nomeInterface = NULL, caule = FALSE) {
     }
 
   }
+  
+  
+  if(caule) {
+    
+    setwd(diretorioCaule)
+      
+    code <- readLines('code.R')
+    
+    for(i in 1:length(code)) { 
+      
+      code[i] <- substring(code[i], 2, nchar(code[i])) 
+      
+    }
+    
+    writeLines(code, 'code.R')
+  }
 
 
 }

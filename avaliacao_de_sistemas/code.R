@@ -30,11 +30,13 @@
      return(0)
    
  }
+
  #***
  #CAMINHO
  #biblioteca/funcionais/aplicacao/aplicacaoBase/quantidade_para_cada_observacao.R
  
  library(xlsx)
+
  # source("biblioteca/funcionais/aplicacao/aplicacaoBase.R")
  
  aplicacao_todas_as_colunas <- function(colunaBase, tabela, funcao, valoresPadrao = NULL) {
@@ -81,10 +83,12 @@
    return(retorno)
    
  }
+
  #CAMINHO
  #biblioteca/funcionais/tabela_variaveis_avaliacao.R
  
  library(xlsx)
+
  # source("biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R")
  
  
@@ -120,11 +124,13 @@
    return(aux)
    
  } #complexidade mXpolinomial ou mXpolinomalXk
+
  #***
  #CAMINHO
  #biblioteca/funcionais/aplicacao/filtro_mes_servico.R
  
  library(lubridate)
+
  #- Esta funcao recebe de uma a tres tabelas, respectivamente com: 1 a 3 nomes de colunas
  #com informacoes, 1 a 3 nomes de colunas acerca de data, e 1 a 3 colunas acerca de valores 
  #categoricos. Recebe valoresPadrao, casos, meses, e anos.
@@ -274,6 +280,7 @@
    return(retorno)
    
  } #complexidade mkt X max(n, complexidadeIndicador), sendo k < 12 (pode ser quadratica em alguns casos, porem na maioria dos casos eh aprox quadratica)
+
  #tabela <- filtro_mes_variavel(tabelaA = material, 
  #                 coluna_quantidade_somatorioA = "KA_CANTID", 
  #                 tabelaB = hospitalizacion, 
@@ -285,6 +292,7 @@
  #                 meses = c(1:6),
  #                 anos = c(2018),
  #                 indicador = indicadorConsumo)
+
  #Objetivo: Criar uma funcao para aplicar outras funcoes a todas as colunas de uma tabela. 
  
  #***
@@ -307,6 +315,7 @@
           )                             
                                 
  }
+
  #***
  #CAMINHO
  #biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R
@@ -326,6 +335,7 @@
    return(variavel)
    
  } #complexidade n(chao de 2n)
+
  #CAMINHO
  #biblioteca/funcionais/quantidade_de_observacoes.R
  
@@ -352,11 +362,13 @@
    return(total)
    
  } #complexidade mn
+
  #***
  #CAMINHO
  #biblioteca/funcionais/aplicacao/aplicacaoBase/quantidade_para_cada_observacao.R
  
  library(xlsx)
+
  #***
  #FUNCAO CAULE
  #-Esta funcao recebe a coluna de uma tabela
@@ -373,6 +385,46 @@
    return(retorno)
    
  } #complexidade n(chao de 2n)
+
+ #CAMINHO
+ #gerenciamento_dados/verificaNas.R
+ 
+ verificaNas <- function(tabela){
+   
+   resultado <- c(NULL)
+   
+   for(i in 1:length(tabela)) {
+     
+     '%UNE%' <- function(x,y) paste(x, y) 
+     
+     print(paste("Quantidade Nas coluna : ", colnames(tabela)[i], " " ,sep = ""))
+     
+     nomeVariavel <- colnames(tabela)[i]
+     nas <- sum(is.na(tabela[[i]]), na.rm = TRUE)
+     
+     resultado <- 
+       
+       eval(parse(text =
+                    "c(resultado," %UNE%
+                    nomeVariavel %UNE%
+                    "=" %UNE%
+                    "nas" %UNE%
+                    ")"
+         
+         
+       ))
+     
+     #***
+     #Como fazer isso sem metaprog? 
+     
+     print(nas)
+     
+   }
+   
+   return(resultado)
+   
+ }
+
  #***
  #Funcoes irmas
  # source("biblioteca/funcionais.R")
@@ -457,6 +509,7 @@
    print(paste("media: ", media, sep = "")) #complexidade n
    
  } #complexidade nm
+
  #***
  #CAMINHO
  #biblioteca/qualidade/completitude/completitude.R
@@ -477,8 +530,61 @@
    return(resultado)
    
  } #complexidade n(chao de 2n)
+
+ #' completitude_relacionada
+ #' calcula a completitude de uma variavel de acordo com um conjunto de fatores presentes em um conjunto de variaveis de referencia
+ #' @param tabela o dataframe em que os calculos serao realizados
+ #' @param variaveis_de_referencia o conjunto de variaveis utilizadas como referencia, quando combinadas devem indicar uma situacao
+ #' @param variavel_para_avaliacao a variavel sobre a qual será calculada a completitude
+ #' @param valoresPadrao um conjunto de vetores, com os fatores de cada uma das variáveis de referência, respectivamente
+ #' @example 
+ #' completitude_relacionada(dengue2013, ("CS_SEXO"), c("CS_GESTANT"), c(c("F")))
+ #' @return Retorna a completitude da \code{variavel_para_avaliacao} contendo apenas as linhas que possuiam determinados conjuntos de fatores
+ #' nas \code{variaveis_de_referencia} de acordo com os \code{valoresPadrao}
+ #' @export
+ completitude_relacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
+                                      
+ ) { #variavel_de_referencia = n = variavel_para_avaliacao  valoresPadrao = m
+   
+   if(length(variaveis_de_referencia) != length(valoresPadrao) & !is.null(valoresPadrao)) {
+     return(print("cada coluna deve conter os seus proprios valores padrao"))
+   }
+   
+   for(i in (variaveis_de_referencia)) {
+     tabela[[i]] <- as.character(tabela[[i]]) #complexidade n 
+   }
+   
+   posicoes <- NULL
+   
+   if(!is.null(valoresPadrao)) {
+     
+     for(i in 1:length(variaveis_de_referencia)) {
+       posicoes <- c(posicoes, which(tabela[[variaveis_de_referencia[i]]] %in% valoresPadrao[[i]]))
+     }
+     
+     tabela <- tabela[unique(posicoes),] #complexidade n
+     
+   } else {
+     
+     tabela <- tabela[!is.na(tabela[[variaveis_de_referencia]]),] 
+     
+   }
+   
+   retorno <- completitude(tabela[[variavel_para_avaliacao]])
+   
+   return(retorno)
+ } #complexidade n
+
  #-Esta funcao recebe uma coluna de uma tabela, e uma lista e valores que representa valores possiveis na coluna
  #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados 
+ 
+ #' representatividade
+ #' calcula a representatividade de um conjunto de fatores em uma variavel
+ #' @param variavel a variavel de um dataframe que contenha valores categoricos (fatores)
+ #' @param valoresPadrao o conjunto de fatores sobre os quais sera calculada a representatividade
+ #' @example 
+ #' representatividade(dengue_2013$RESUL_SORO, c("2","4"))
+ #' @export
  representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
    
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
@@ -492,6 +598,7 @@
    return(paste("representatividade: ", retorno, "%", sep = ""))
    
  } #complexidade nm
+
  #***
  #Padrao de programacao:
  
@@ -516,6 +623,14 @@
  #-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a 
  #uma confirmacao do caso verdadeira(chavePositivo), e a chave correspondente a um falso positivo(chave_falso_positivo)
  #-retorna a porcentagem dos valores positivos que eram verdadeiros
+ 
+ #' porcentagem_verdadeiro_positivo
+ #' @param variavel a variavel de um dataframe com os fatores investigados
+ #' @param chavePositvo os fatores indicando quais são os fatores verdadeiramente positivos
+ #' @param chave_falso_positivo os fatores indicando quais sao os fatores que representam casos aferidos erroneamente como positivos
+ #' @example 
+ #' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4") #supondo que 2 seja positivo e 4 seja falso positivo
+ #' @return  retorna a porcentagem dos valores positivos que eram verdadeiros
  porcentagem_verdadeiro_positivo <- function(variavel, chavePositivo, chave_falso_positivo) {# variavel = n chavePositivo = 1 chave_falso_positivo = 1
    
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
@@ -527,12 +642,15 @@
    return(retorno)
    
  } #complexidade n(chao de 2n)
+
  #Esta funcao funcionara para as duas formulas do eslaide 15
  casos_hospitalizados <- function(variavelX, variavelY) {
    
    
  } #nao entendi bem da forma como esta colocada esta avaliacao no eslaide(ver com Marcela).
+
  #eslaide 16 nao possui formula definida
+
  #***
  #CAMINHO
  #transformacao/estratificacaoIdade.R
@@ -547,20 +665,21 @@
  #'  extratificacaoIdade
  #'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
  #' 
- #' @param tabela o dataframe em uso
- #' @param coluna a coluna que sera utilizada
+ #' @param tabela o dataframe ao qual serah adicionada a nova coluna
+ #' @param coluna a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)
  #' @param extratos a definicao dos extratos nos quais havera a divisao
  #' @param nomesExtratos os nomes dos extratos definidos
  #' @param nomeNovaColuna nome da coluna que sera adicionada ao dataframe com os novos extratos
  #' @param coluna_eh_data_nascimento informa se a coluna apresenta informacoes de data de nascimento
- #' @param formatoData informa o formato em que a data esta construida
+ #' @param formatoData informa o formato em que a data está respresentada. Obs: O parâmetro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro. 
+ #' @return O dataframe \code{tabela} com uma nova variável representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrão.
  #' @example 
- #' Usar com os formatos padroes de idade do ibge 
- #' extratificacaoIdade(tabela = teste, coluna = 'caio')
+ #' extratificacaoIdade(tabela = dengue2013, 
+ #'                     coluna = dengue2013$DT_NASC, 
+ #'                     coluna_eh_data_nascimento = TRUE, 
+ #'                     nomesExtratos = c("<1", "1-4", "5-9", "10-19", "20-29", "30-29", "40-49", "50-59", "60-69", "70+")
+ #')
  #' @export  
- 
- 
- 
  extratificacaoIdade <- function(tabela, coluna, extratos = NULL, nomesExtratos = NULL, nomeNovaColuna = NULL, coluna_eh_data_nascimento = FALSE, formatoData = NULL) {
    
    resultado <- NULL

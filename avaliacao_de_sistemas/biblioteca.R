@@ -28,6 +28,7 @@ source('interface.R')
 
 interface(nomeInterface = "biblioteca", caule = TRUE)
 
+
 #***
 #LEITURA:
 #a ideia da leitura eh criar funcoes que facilitem a leitura de dados

@@ -11,6 +11,20 @@ interface('representatividade')
 
 #-Esta funcao recebe duas colunas de uma tabela, que devem possuir tamanho igual. Tambem recebe dois vetores de valores possiveis na tabela.
 #-Retorna a porcentagem dos valores de valoresPadrao encontrados na colunaAlvo, que possuem tambem os valoresFiltro na colunaFiltro
+#' representatividadeCondicionada
+#' funcao que calcula a representavidade de uma variavel, de acordo com uma variavel referencia de fatores (para um conjunto de fatores)
+#' @param colunaFiltro recebe a coluna de um dataframe que registra os fatores
+#' @param valoresFiltro recebe os fatores da variavel \code{colunaFiltro} que serao utilizados
+#' @param colunaAlvo recebe a coluna do mesmo dataframe que \code{colunaFiltro} do qual sera calculada a representatividade
+#' @param valoresPadrao o conjunto de fatores que irao ser calculados perante o total de observacoes
+#' @return Retorna a porcentagem dos valores de \code{valoresPadrao} encontrados na \code{colunaAlvo}, que possuem tambem os \code{valoresFiltro} na \code{colunaFiltro}
+#' @example 
+#' representatividadeCondicionada(colunaFiltro = dengue2013$RESUL_SORO, 
+#'                                valoresFiltro = c("2","4"), 
+#'                                colunaAlvo = dengue2013$NU_ANO, 
+#'                                valoresPadrao = c("2013")
+#'                                )
+#' @export
 representatividadeCondicionada <- function(colunaFiltro, valoresFiltro, colunaAlvo, valoresPadrao) { #colunaFiltro = n = colunaAlvo, valoresFiltro = t, valoresPadrao = j
   
   if(is.null(colunaFiltro) || is.null(valoresFiltro) || is.null(colunaAlvo) || is.null(valoresPadrao)) {

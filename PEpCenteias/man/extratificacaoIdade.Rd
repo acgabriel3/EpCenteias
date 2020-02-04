@@ -16,9 +16,9 @@ extratificacaoIdade(
 )
 }
 \arguments{
-\item{tabela}{o dataframe em uso}
+\item{tabela}{o dataframe ao qual serah adicionada a nova coluna}
 
-\item{coluna}{a coluna que sera utilizada}
+\item{coluna}{a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)}
 
 \item{extratos}{a definicao dos extratos nos quais havera a divisao}
 
@@ -28,7 +28,10 @@ extratificacaoIdade(
 
 \item{coluna_eh_data_nascimento}{informa se a coluna apresenta informacoes de data de nascimento}
 
-\item{formatoData}{informa o formato em que a data esta construida}
+\item{formatoData}{informa o formato em que a data está respresentada. Obs: O parâmetro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro.}
+}
+\value{
+O dataframe \code{tabela} com uma nova variável representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrão.
 }
 \description{
 extratificacaoIdade

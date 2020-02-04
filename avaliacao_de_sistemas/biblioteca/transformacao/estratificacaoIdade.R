@@ -12,20 +12,21 @@
 #'  extratificacaoIdade
 #'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
 #' 
-#' @param tabela o dataframe em uso
-#' @param coluna a coluna que sera utilizada
+#' @param tabela o dataframe ao qual serah adicionada a nova coluna
+#' @param coluna a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)
 #' @param extratos a definicao dos extratos nos quais havera a divisao
 #' @param nomesExtratos os nomes dos extratos definidos
 #' @param nomeNovaColuna nome da coluna que sera adicionada ao dataframe com os novos extratos
 #' @param coluna_eh_data_nascimento informa se a coluna apresenta informacoes de data de nascimento
-#' @param formatoData informa o formato em que a data esta construida
+#' @param formatoData informa o formato em que a data está respresentada. Obs: O parâmetro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro. 
+#' @return O dataframe \code{tabela} com uma nova variável representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrão.
 #' @example 
-#' Usar com os formatos padroes de idade do ibge 
-#' extratificacaoIdade(tabela = teste, coluna = 'caio')
+#' extratificacaoIdade(tabela = dengue2013, 
+#'                     coluna = dengue2013$DT_NASC, 
+#'                     coluna_eh_data_nascimento = TRUE, 
+#'                     nomesExtratos = c("<1", "1-4", "5-9", "10-19", "20-29", "30-29", "40-49", "50-59", "60-69", "70+")
+#')
 #' @export  
-
-
-
 extratificacaoIdade <- function(tabela, coluna, extratos = NULL, nomesExtratos = NULL, nomeNovaColuna = NULL, coluna_eh_data_nascimento = FALSE, formatoData = NULL) {
   
   resultado <- NULL

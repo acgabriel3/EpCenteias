@@ -1,6 +1,14 @@
 
 #-Esta funcao recebe uma coluna de uma tabela, e uma lista e valores que representa valores possiveis na coluna
 #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados 
+
+#' representatividade
+#' calcula a representatividade de um conjunto de fatores em uma variavel
+#' @param variavel a variavel de um dataframe que contenha valores categoricos (fatores)
+#' @param valoresPadrao o conjunto de fatores sobre os quais sera calculada a representatividade
+#' @example 
+#' representatividade(dengue_2013$RESUL_SORO, c("2","4"))
+#' @export
 representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
   
   # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
