@@ -3,6 +3,7 @@
 \name{extratificacaoIdade}
 \alias{extratificacaoIdade}
 \title{extratificacaoIdade
+ @description 
  Constroi extratos para datas (ano de nascimento) ou valores inteiros}
 \usage{
 extratificacaoIdade(
@@ -28,12 +29,20 @@ extratificacaoIdade(
 
 \item{coluna_eh_data_nascimento}{informa se a coluna apresenta informacoes de data de nascimento}
 
-\item{formatoData}{informa o formato em que a data está respresentada. Obs: O parâmetro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro.}
+\item{formatoData}{informa o formato em que a data esta respresentada. Obs: O parametro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro.}
 }
 \value{
-O dataframe \code{tabela} com uma nova variável representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrão.
+O dataframe \code{tabela} com uma nova variavel representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrao.
 }
 \description{
 extratificacaoIdade
+ @description 
  Constroi extratos para datas (ano de nascimento) ou valores inteiros
+}
+\examples{
+extratificacaoIdade(tabela = dengue2013,
+                    coluna = dengue2013$DT_NASC,
+                    coluna_eh_data_nascimento = TRUE,
+                    nomesExtratos = c("<1", "1-4", "5-9", "10-19", "20-29", "30-29", "40-49", "50-59", "60-69", "70+")
+)
 }

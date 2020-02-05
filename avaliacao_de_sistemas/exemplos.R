@@ -4,7 +4,7 @@ completitude(dengue_2007$SEM_NOT)
 
 valores <- c("masculino", "11")
 
-camposDistintos(dengue_2007$RESUL_SORO, c("1", "2", "3","4"))
+validade(dengue_2007$RESUL_SORO, c("1", "2", "3","4"))
 
 duracao_em_dias(dengue_2013$DT_NOTIFIC, dengue_2013$DT_SIN_PRI, quantidade_dias_referencia = 8, mediana = TRUE
                    ,valoresPadrao = c("2", "4"), variavel_identificador = dengue_2013$RESUL_SORO)
@@ -23,11 +23,11 @@ completitude_relacionada(dengue_2013$CS_SEXO, dengue_2013$CS_GESTANT, c("F"))
 #Validade para intervalo:
 #-O valor a esquerda em valores padrao eh o limite inferior (por exemplo se quiser incluir 1000, coloque 999)
 #-O valor a direita em valores padrao eh o limite superior (por exemplo, se quiser incluir 3000, coloque 3001)
-camposDistintos(dengue_2013$NU_IDADE_N, valoresPadrao = c("1000", "3000"), intervalo = TRUE) 
+validade(dengue_2013$NU_IDADE_N, valoresPadrao = c("1000", "3000"), intervalo = TRUE) 
 
 #***
 #Validade para data:
-camposDistintos(dengue_2013$DT_NOTIFIC, data = TRUE) #funciona para formatos específicos (conversar sobre)
+validade(dengue_2013$DT_NOTIFIC, data = TRUE) #funciona para formatos específicos (conversar sobre)
 
 #***
 #Contagem de quantidade de vezes que um municipio (por exemplo), aparece em uma variavel:

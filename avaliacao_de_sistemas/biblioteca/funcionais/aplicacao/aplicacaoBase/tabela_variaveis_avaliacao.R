@@ -13,6 +13,16 @@ library(xlsx)
 #-Funcao deve ser uma funcao aplicada a uma coluna, que possua ou nao valoresPadrao como parametro
   #Se nao forem informados valores padrao, a funcao sera aplicada apenas recebendo variavel como parametro
 #-ValoresPadrao deve ser um vetor
+
+#' tabela_variaveis_avaliacao
+#' @param variavelBase variavel referencia de um dataframe
+#' @param variavel variavel de um dataframe sobre a qual serao realizadas as operacoes
+#' @param funcao funcao que sera aplicada sobre a \code{variavel}
+#' @param valoresPadrao o conjunto de fatores considerado nos quais serao calculadas a operacao
+#' @return retorna o resultado e registra em tabela xlsx da \code{funcao} sobre a \code{variavel} aplicado apenas as linhas que possuem os \code{valoresPadrao} na \code{variavelBase}
+#' @examples 
+#' tabela_variaveis_avaliacao(dengue2013$CS_SEXO, dengue2013$RESUL_SORO, representatividade, valoresPadrao = c("2"))
+#' @export
 tabela_variaveis_avaliacao <- function(variavelBase, variavel, funcao, valoresPadrao = NULL) { #variavelBase = n = variavel, levels(variavelBase) = m, valoresPadrao = k
   
   # variavelBase <- valores_em_branco_para_NA(variavelBase) #complexidade n

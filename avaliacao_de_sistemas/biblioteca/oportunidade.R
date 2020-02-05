@@ -8,12 +8,29 @@
 #-Esta funcao recebe duas colunas de uma mesma tabela referente a datas que devem estar no formato %aaaa%mm%dd (ano, mes e dia)
 #-Recebe uma lista de valores padrao e uma coluna que servira para filtrar de acordo com determinado valor padrao.
 #-retorna a media do intervalo de tempo entre as observacoes de uma mesma linha das colunas de datas filtradas de acordo com o escolhido.
+
+#' duracao_em_dias
+#' @description 
+#' funcao ainda em desenvolvimento, tera como objetivo o calculo da duracao media em dias de dois eventos, recebendo a data inicio x e a data final x do evento
+#' e outras informacoes
+#' @param coluna_data_x vetor de um dataframe com a data final do evento
+#' @param coluna_data_y vetor de um dataframe com a data de inicio do evento
+#' @param mediana indica se a mediana devera ser calculada
+#' @param quantidade_dias_referencia em implementacao
+#' @param variavelIdentificador uma variavel qualitativa do datafram sobre o qual serao determinados os eventos de interesse (quando preenchido)
+#' @param valoresPadrao os casos que devem ser considerados para \code{variavelIdentificador}
+#' @param formato o formato de data que deve ser utilizado
+#' @return prints com sumarios da distribuicao da duracao do evento, media e mediana da duracao do evento
+#' @examples 
+#' duracao_em_dias(dengue2013$DT_NOTIFIC, dengue2013$DT_SIN_PRI, mediana = TRUE
+#'                ,valoresPadrao = c("2", "4"), variavel_identificador = dengue_2013$RESUL_SORO)
+#' @export
 duracao_em_dias <- function(coluna_data_x = NULL, coluna_data_y = NULL, mediana = FALSE
-                            ,quantidade_dias_referencia = NULL, valoresPadrao = NULL
-                            ,variavel_identificador = NULL, formato = NULL) { # coluna_data_x = n = coluna_data_y, valoresPadrao = m
+                            ,quantidade_dias_referencia = NULL, variavelIdentificador = NULL
+                            ,valoresPadrao = NULL, formato = NULL) { # coluna_data_x = n = coluna_data_y, valoresPadrao = m
   
   
-  if(xor(is.null(valoresPadrao), is.null(variavel_identificador))) {
+  if(xor(is.null(valoresPadrao), is.null(variavelIdentificador))) {
     
     return("valoresPadrao ou variavel de valoresPadrao nao indicados")
     
@@ -57,10 +74,10 @@ duracao_em_dias <- function(coluna_data_x = NULL, coluna_data_y = NULL, mediana 
     #print(paste(total_diferenca_superior, " registros acima de ", quantidade_dias_referencia, " dias",sep = ""))
   }
   
-  if(!is.null(valoresPadrao) && !is.null(variavel_identificador)) { 
+  if(!is.null(valoresPadrao) && !is.null(variavelIdentificador)) { 
     
     
-    diferenca_de_dias <- subset(diferenca_de_dias, variavel_identificador %in% valoresPadrao) #complexidade nm
+    diferenca_de_dias <- subset(diferenca_de_dias, variavelIdentificador %in% valoresPadrao) #complexidade nm
     
     total_identificada_inferior <- sum(diferenca_de_dias <= quantidade_dias_referencia, na.rm = TRUE) #complexidade 2n
     total_identificada_superior <- sum(diferenca_de_dias > quantidade_dias_referencia, na.rm = TRUE) #complexidade 2n

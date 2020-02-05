@@ -11,11 +11,14 @@ porcentagem_verdadeiro_positivo(variavel, chavePositivo, chave_falso_positivo)
 
 \item{chave_falso_positivo}{os fatores indicando quais sao os fatores que representam casos aferidos erroneamente como positivos}
 
-\item{chavePositvo}{os fatores indicando quais são os fatores verdadeiramente positivos}
+\item{chavePositvo}{os fatores indicando quais sao os fatores verdadeiramente positivos}
 }
 \value{
 retorna a porcentagem dos valores positivos que eram verdadeiros
 }
 \description{
 porcentagem_verdadeiro_positivo
+}
+\examples{
+porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4")
 }

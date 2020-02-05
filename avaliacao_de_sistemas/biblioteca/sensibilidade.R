@@ -19,33 +19,33 @@
 # source("biblioteca/funcionais.R")
 
 
-#-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a 
+#-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a
 #uma confirmacao do caso verdadeira(chavePositivo), e a chave correspondente a um falso positivo(chave_falso_positivo)
 #-retorna a porcentagem dos valores positivos que eram verdadeiros
 
 #' porcentagem_verdadeiro_positivo
 #' @param variavel a variavel de um dataframe com os fatores investigados
-#' @param chavePositvo os fatores indicando quais são os fatores verdadeiramente positivos
+#' @param chavePositvo os fatores indicando quais sao os fatores verdadeiramente positivos
 #' @param chave_falso_positivo os fatores indicando quais sao os fatores que representam casos aferidos erroneamente como positivos
-#' @example 
-#' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4") #supondo que 2 seja positivo e 4 seja falso positivo
+#' @examples
+#' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4")
 #' @return  retorna a porcentagem dos valores positivos que eram verdadeiros
 porcentagem_verdadeiro_positivo <- function(variavel, chavePositivo, chave_falso_positivo) {# variavel = n chavePositivo = 1 chave_falso_positivo = 1
-  
+
   # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
-  
+
   quantidadePositivo <- sum(variavel == chavePositivo, na.rm = TRUE) #complexidade n(chao de 2n)
   quantidade_falso_positivo <- sum(variavel == chave_falso_positivo, na.rm = TRUE) #complexidade n(chao de 2n)
-  
+
   retorno <- ((quantidadePositivo)/(quantidadePositivo + quantidade_falso_positivo)) * 100 #complexidade 3
   return(retorno)
-  
+
 } #complexidade n(chao de 2n)
 
 #Esta funcao funcionara para as duas formulas do eslaide 15
 casos_hospitalizados <- function(variavelX, variavelY) {
-  
-  
+
+
 } #nao entendi bem da forma como esta colocada esta avaliacao no eslaide(ver com Marcela).
 
 #eslaide 16 nao possui formula definida

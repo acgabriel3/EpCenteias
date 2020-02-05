@@ -6,6 +6,15 @@ library(xlsx)
 
 # source("biblioteca/funcionais/aplicacao/aplicacaoBase.R")
 
+#' aplicacao_todas_as_colunas
+#' @description 
+#' funcao em desenvolvimento que aplica uma funcao a todas as colunas de uma tabela de acordo com uma coluna referencia
+#' @param colunaBase uma variavel de fatores de um dataframe 
+#' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+#' @param funcao a funcao que sera aplicada sobre as colunas de \code{tabela}
+#' @param valoresPadrao o conjunto de valores que sera considerado para a aplicacao da funcao
+#' @return retorna os resultados da aplicacao da funcao em cada coluna
+#' @export
 aplicacao_todas_as_colunas <- function(colunaBase, tabela, funcao, valoresPadrao = NULL) {
   
   retorno <- NULL  

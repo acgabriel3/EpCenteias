@@ -2,8 +2,7 @@
 % Please edit documentation in R/code.R
 \name{representatividade}
 \alias{representatividade}
-\title{representatividade
-calcula a representatividade de um conjunto de fatores em uma variavel}
+\title{representatividade}
 \usage{
 representatividade(variavel, valoresPadrao)
 }
@@ -13,6 +12,8 @@ representatividade(variavel, valoresPadrao)
 \item{valoresPadrao}{o conjunto de fatores sobre os quais sera calculada a representatividade}
 }
 \description{
-representatividade
 calcula a representatividade de um conjunto de fatores em uma variavel
+}
+\examples{
+representatividade(dengue_2013$RESUL_SORO, c("2","4"))
 }

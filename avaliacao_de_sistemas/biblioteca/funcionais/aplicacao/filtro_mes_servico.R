@@ -13,6 +13,10 @@ library(lubridate)
 #as categorias das colunas categoricas, e aplica uma funcao qualquer a estes dados. 
 #(deve-se preencher corretamente a funcao, de acordo com a funcao que sera aplicada (indicador))
 #- Retorna uma tabela com os resultados da funcao aplicada para cada categoria e data escolhida.
+
+#' filtro_mes_variavel
+#' funcao experimental que filtra por mes e por variavel algumas tabelas para a construcao de um indicador epidemiologico
+#' @export
 filtro_mes_variavel <- function(tabelaA, coluna_quantidade_somatorioA, tabelaB = NULL, coluna_quantidade_somatorioB = NULL,
                                tabelaC = NULL, coluna_quantidade_somatorioC = NULL, 
                                colunafiltroA, colunafiltroB, colunafiltroC, 

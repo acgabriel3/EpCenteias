@@ -1,12 +1,13 @@
 
 
 #' completitude_relacionada
+#' @description 
 #' calcula a completitude de uma variavel de acordo com um conjunto de fatores presentes em um conjunto de variaveis de referencia
 #' @param tabela o dataframe em que os calculos serao realizados
 #' @param variaveis_de_referencia o conjunto de variaveis utilizadas como referencia, quando combinadas devem indicar uma situacao
-#' @param variavel_para_avaliacao a variavel sobre a qual será calculada a completitude
-#' @param valoresPadrao um conjunto de vetores, com os fatores de cada uma das variáveis de referência, respectivamente
-#' @example 
+#' @param variavel_para_avaliacao a variavel sobre a qual sera calculada a completitude
+#' @param valoresPadrao um conjunto de vetores, com os fatores de cada uma das variaveis de referencia, respectivamente
+#' @examples 
 #' completitude_relacionada(dengue2013, ("CS_SEXO"), c("CS_GESTANT"), c(c("F")))
 #' @return Retorna a completitude da \code{variavel_para_avaliacao} contendo apenas as linhas que possuiam determinados conjuntos de fatores
 #' nas \code{variaveis_de_referencia} de acordo com os \code{valoresPadrao}

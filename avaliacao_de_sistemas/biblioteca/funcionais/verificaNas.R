@@ -1,6 +1,11 @@
-#CAMINHO
-#gerenciamento_dados/verificaNas.R
 
+
+#' verificaNas
+#' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+#' @return retorna um hash com o nome de cada coluna da tabela e os valores em branco contidos nessa coluna
+#' @examples 
+#' verificaNas(dengue2013)
+#' @export
 verificaNas <- function(tabela){
   
   resultado <- c(NULL)

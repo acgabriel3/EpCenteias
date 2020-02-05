@@ -1,7 +1,131 @@
 
+ #-Esta funcao recebe duas colunas de um data.frame
+ #-Pode receber um formato especifico para a data ou valores padrao para calcular a inconsistencia
+ #-Calcula a consistencia dos dados da coluna B segundo a coluna A 
+ #-Se forem datas, inconsitencia eh entendida como uma data na coluna B anterior a uma data na coluna A
+ #-Retorna a porcentagem de valores inconsistentes na coluna B
+ 
+ #' consistencia
+ #' @description 
+ #' calcula a consistencia de variaveis de fatores e datas
+ #' @param colunaA variavel de um dataframe que sera utilizada como referencia
+ #' @param colunaB variavel de um dataframe que sera checada
+ #' @param coluna_adicional_parametro variavel de um dataframe que sera utilizada para filtrar a tabela
+ #' @param data indica se a funcao sera aplicada sobre variaveis de data
+ #' @param valoresPadrao o conjunto de fatores a serem filtrados em \code{colunaA}
+ #' @param valores_padrao_adicionais o conjunto de fatores a serem filtrador em \code{coluna_adicional_parametro}
+ #' @param formato o formato da data utilizado
+ #' @return retorna a consistencia com relacao as variaveis determinadas
+ #' @examples 
+ #' consistencia(colunaA = dengue2013$DT_SORO, colunaB = dengue2013$RESUL_SORO, duas_colunas_data = FALSE)
+ #' consistencia(colunaA = dengue2013$RESUL_SORO, colunaB = dengue2013$DT_SORO, duas_colunas_data = FALSE)
+ #' consistencia(colunaA = dengue2013$RESUL_SORO, colunaB = dengue2013$DT_SORO, valoresPadrao = c("2", "4"), duas_colunas_data = FALSE)
+ #' consistencia(colunaA = dengue2013$RESUL_SORO, colunaB = dengue2013$DT_SORO, coluna_adicional_parametro = dengue2013$NU_ANO, duas_colunas_data = FALSE)
+ #' consistencia(colunaA = dengue2013$RESUL_SORO, colunaB = dengue2013$DT_SORO,coluna_adicional_parametro = dengue2013$NU_ANO,
+ #'              valoresPadrao = c("2", "4"), valores_padrao_adicionais =  c("2013"),duas_colunas_data = FALSE)
+ #' @export
+ consistencia <- function(colunaA = NULL, colunaB = NULL, coluna_adicional_parametro = NULL, 
+                          data = TRUE, valoresPadrao = NULL
+                          , valores_padrao_adicionais = NULL, formato = NULL) { #colunaA = n = colunaB, valoresPadra = m
+   
+   if(is.null(colunaA) || is.null(colunaB)) {
+     return("Entrada invalida, colunaA e colunaB devem ser ambas preenchidas")
+   }
+   
+   # colunaA <- valores_em_branco_para_NA(colunaA) #complexidade n
+   # colunaB <- valores_em_branco_para_NA(colunaB) #complexidade n
+   
+   if(data) {
+     
+     preenchidos <- !is.na(colunaA)
+     colunaA <- colunaA[preenchidos]
+     colunaB <- colunaB[preenchidos]
+     
+     tamanho_coluna_A <- length(colunaA) #complexidade n
+     
+     if(is.null(formato)) {
+       datasA <- as.Date(colunaA) #complexidade n
+       #esta coluna sera avaliada
+       datasB <- as.Date(colunaB) #complexidade n
+     } else {
+       datasA <- as.Date(colunaA, format = formato) #complexidade n
+       #esta coluna sera avaliada
+       datasB <- as.Date(colunaB, format = formato) #complexidade n
+     }
+     
+     valoresInconsistentes <- (datasB - datasA) < 0 #complexidade 2n
+     qtdInconsistentes <- sum(valoresInconsistentes, na.rm = TRUE) #complexidade n
+     
+     proporcao <- (qtdInconsistentes/tamanho_coluna_A) * 100 #complexidade 2n
+     
+     return(paste("porcentagem de valores inconsistentes na coluna B: ", proporcao, "%", sep = ""))
+     
+   } else {
+     
+     if(is.null(valoresPadrao)) {
+       
+       valoresPreenchidos <- !is.na(colunaA) #complexidade 2n
+       dadosInconsistentes <- sum(is.na(colunaB[valoresPreenchidos]), na.rm = TRUE) #complexidade 3n
+       proporcao <- (dadosInconsistentes/length(colunaA[valoresPreenchidos])) * 100 #complexidade 4n
+       
+       return(paste("Proporcao de valores inconsistentes: ", proporcao, "%", sep = ""))
+       
+     } else {
+       
+       coluna_filtrada <- subset(colunaB, colunaA %in% valoresPadrao) #complexidade nm
+       proporcao <- (sum(is.na(coluna_filtrada), na.rm = TRUE)/length(coluna_filtrada)) * 100 #complexidade 3n
+       return(paste("Proporcao de valores inconsistentes: ", proporcao, "%", sep = ""))
+       
+     }
+     
+   }
+   
+   if(!is.null(coluna_adicional_parametro)) {
+     coluna_adicional_parametro <- valores_em_branco_para_NA(coluna_adicional_parametro)
+     
+     if(is.null(valoresPadrao)) {
+       
+       valoresPreenchidos <- !is.na(colunaA) & !is.na(coluna_adicional_parametro) #xomplexidade 5n
+       dadosInconsistentes <- sum(is.na(colunaB[valoresPreenchidos]), na.rm = TRUE) #complexidade 3n
+       proporcao <- (dadosInconsistentes/length(colunaA[valoresPreenchidos])) * 100 #complexidade 4n
+       
+       return(paste("Proporcao de valores inconsistentes: ", proporcao, "%", sep = ""))
+       
+     } else {
+       
+       if(is.null(valores_padrao_adicionais)) {
+         return("valores_padrao_adicionais deve ser fornecido")
+       }
+       
+       coluna_filtrada <- subset(colunaB, (colunaA %in% valoresPadrao) & 
+                                   (coluna_adicional_parametro %in% valores_padrao_adicionais)) #complexidade 2nm + n
+       proporcao <- (sum(is.na(coluna_filtrada), na.rm = TRUE)/length(coluna_filtrada)) * 100 #complexidade 3n
+       return(paste("Proporcao de valores inconsistentes: ", proporcao, "%", sep = ""))
+       
+     }
+     
+   }
+   
+   return("entrada invalida")
+   
+ } #complexidade n(chao de 2n) (para duas datas) ou complexidade n(chao de 4n) (para valoresPadrao null e nao data) ou complexidade nm (chao de 2nm+n) (para valoresPadrao setados)
+
  #Consistencia alterada
  
+ #***
+ #rever funcao e proposta
  
+ #' consistencia_variavel_conjunto
+ #' @description 
+ #' funcao ainda em desenvolvimento, nao usar
+ #' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+ #' @param colunaA a coluna de referencia
+ #' @param colunasB as colunas sobre as quais sera calculada a consitencia com relacao a \code{colunaA}
+ #' @param valores_padrao_A um conjunto de fatores de \code{colunaA} que serao considerados
+ #' @param valores_padrao_B um conjunto e conjunto de faotes para cada \code{colunasB}
+ #' @param diferenca ainda em implementacao
+ #' @return retorna a consistencia com relacao a cada variavel
+ #' @export
  consistencia_variavel_conjunto <- function(tabela, colunaA, colunasB, valores_padrao_A, valores_padrao_B, diferenca = FALSE) {
    
    
@@ -39,6 +163,15 @@
 
  # source("biblioteca/funcionais/aplicacao/aplicacaoBase.R")
  
+ #' aplicacao_todas_as_colunas
+ #' @description 
+ #' funcao em desenvolvimento que aplica uma funcao a todas as colunas de uma tabela de acordo com uma coluna referencia
+ #' @param colunaBase uma variavel de fatores de um dataframe 
+ #' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+ #' @param funcao a funcao que sera aplicada sobre as colunas de \code{tabela}
+ #' @param valoresPadrao o conjunto de valores que sera considerado para a aplicacao da funcao
+ #' @return retorna os resultados da aplicacao da funcao em cada coluna
+ #' @export
  aplicacao_todas_as_colunas <- function(colunaBase, tabela, funcao, valoresPadrao = NULL) {
    
    retorno <- NULL  
@@ -99,6 +232,16 @@
  #-Funcao deve ser uma funcao aplicada a uma coluna, que possua ou nao valoresPadrao como parametro
    #Se nao forem informados valores padrao, a funcao sera aplicada apenas recebendo variavel como parametro
  #-ValoresPadrao deve ser um vetor
+ 
+ #' tabela_variaveis_avaliacao
+ #' @param variavelBase variavel referencia de um dataframe
+ #' @param variavel variavel de um dataframe sobre a qual serao realizadas as operacoes
+ #' @param funcao funcao que sera aplicada sobre a \code{variavel}
+ #' @param valoresPadrao o conjunto de fatores considerado nos quais serao calculadas a operacao
+ #' @return retorna o resultado e registra em tabela xlsx da \code{funcao} sobre a \code{variavel} aplicado apenas as linhas que possuem os \code{valoresPadrao} na \code{variavelBase}
+ #' @examples 
+ #' tabela_variaveis_avaliacao(dengue2013$CS_SEXO, dengue2013$RESUL_SORO, representatividade, valoresPadrao = c("2"))
+ #' @export
  tabela_variaveis_avaliacao <- function(variavelBase, variavel, funcao, valoresPadrao = NULL) { #variavelBase = n = variavel, levels(variavelBase) = m, valoresPadrao = k
    
    # variavelBase <- valores_em_branco_para_NA(variavelBase) #complexidade n
@@ -125,6 +268,34 @@
    
  } #complexidade mXpolinomial ou mXpolinomalXk
 
+ #Objetivo: Criar uma funcao para aplicar outras funcoes a todas as colunas de uma tabela. 
+ 
+ #***
+ #Padronizar entradas em todas as funcoes da biblioteca.
+ #***
+ #Seria necessario colocar todas as possibilidades possiveis de entrada, talvez seja possivel 
+ #modularizar este processo (pensar acerca)
+ #***
+ #Posso utilizar aqui um swich
+ 
+ #' aplicador_tabelas
+ #' funcao ainda em desenvolvimento que aplica uma funcao a todas as variaveis de uma tabela
+ #' @param tabela o dataframe sobre o qual sera realizada a operacao
+ #' @param funcao em aplicacao
+ #' @param funcao2 em aplicacao
+ aplicador_tabelas <- function(tabela, funcao, funcao2 = NULL, valoresPadrao = NULL, 
+                               colunaBase = NULL) #conjunto de variaveis possiveis) 
+   {
+  
+   if(!is.null(funcao2) || !is.null(valoresPadrao) || !is.null(colunaBase))
+   sapply(tabela, 
+                     function(X) {
+                         print(funcao(colunaBase, X, funcao2))
+                         }
+          )                             
+                                
+ }
+
  #***
  #CAMINHO
  #biblioteca/funcionais/aplicacao/filtro_mes_servico.R
@@ -138,6 +309,10 @@
  #as categorias das colunas categoricas, e aplica uma funcao qualquer a estes dados. 
  #(deve-se preencher corretamente a funcao, de acordo com a funcao que sera aplicada (indicador))
  #- Retorna uma tabela com os resultados da funcao aplicada para cada categoria e data escolhida.
+ 
+ #' filtro_mes_variavel
+ #' funcao experimental que filtra por mes e por variavel algumas tabelas para a construcao de um indicador epidemiologico
+ #' @export
  filtro_mes_variavel <- function(tabelaA, coluna_quantidade_somatorioA, tabelaB = NULL, coluna_quantidade_somatorioB = NULL,
                                 tabelaC = NULL, coluna_quantidade_somatorioC = NULL, 
                                 colunafiltroA, colunafiltroB, colunafiltroC, 
@@ -293,29 +468,6 @@
  #                 anos = c(2018),
  #                 indicador = indicadorConsumo)
 
- #Objetivo: Criar uma funcao para aplicar outras funcoes a todas as colunas de uma tabela. 
- 
- #***
- #Padronizar entradas em todas as funcoes da biblioteca.
- #***
- #Seria necessario colocar todas as possibilidades possiveis de entrada, talvez seja possivel 
- #modularizar este processo (pensar acerca)
- #***
- #Posso utilizar aqui um swich
- 
- aplicador_tabelas <- function(tabela, funcao, funcao2 = NULL, valoresPadrao = NULL, 
-                               colunaBase = NULL) #conjunto de variaveis possiveis) 
-   {
-  
-   if(!is.null(funcao2) || !is.null(valoresPadrao) || !is.null(colunaBase))
-   sapply(tabela, 
-                     function(X) {
-                         print(funcao(colunaBase, X, funcao2))
-                         }
-          )                             
-                                
- }
-
  #***
  #CAMINHO
  #biblioteca/funcionais/limpeza/valores_em_branco_para_NA.R
@@ -327,6 +479,12 @@
  #-Retorna uma variavel modificada com todos o valores em branco substituidos por NA
  #-Variavel deve ser a coluna de um data frame ou um vetor
  
+ #' valores_em_branco_para_NA
+ #' @param um vetor sobre o qual sera realizada a operacao
+ #' @return retorna o vetor, com todas as observacoes que estavam em branco trocados por NA
+ #' @examples
+ #' valores_em_branco_para_NA(dengue2013$DT_NOTIFIC)
+ #' @export
  valores_em_branco_para_NA <- function(variavel) {
    
    variavel <- as.character(variavel)
@@ -343,6 +501,17 @@
  # -Recebe uma variavel de uma tabela e valoresPadrao
  # -Retorna a quantidade de vezes que a totalidade de valores padroes aparecem na tabela, 
  #ou o total de observacoes na tabela (por padrao)
+ 
+ #' quantidade_de_observacoes
+ #' @description 
+ #' calcula com forca bruta
+ #' @param variavel recebe um vetor de fatores
+ #' @param valoresPadrao o conjunto de fatores que sera considerado para realizar a operacao
+ #' @return retorna a quantidade de cada fator de \code{valoresPadrao} em \code{variavel}
+ #' @examples 
+ #' quantidade_de_observacoes(variavel = dengue2013$MUNICIPIO)
+ #' quantidade_de_observacoes(variavel = dengue2013$RESUL_SORO, valoresPadrao = c("2", "4"))
+ #' @export
  quantidade_de_observacoes <- function(variavel, valoresPadrao = NULL) { #variavel = n, valoresPadrao = m
    
    if(!is.null(valoresPadrao)) {
@@ -373,6 +542,17 @@
  #FUNCAO CAULE
  #-Esta funcao recebe a coluna de uma tabela
  #-Retorna a quantidade de vezes que cada variavel aparece na tabela
+ 
+ #' quantidade_para_cada_observacao
+ #' @description 
+ #' calcula com table do dplyr
+ #' @param variavel recebe um vetor de fatores
+ #' @param valoresPadrao o conjunto de fatores que sera considerado para realizar a operacao
+ #' @return retorna a quantidade de cada fator de \code{valoresPadrao} em \code{variavel}
+ #' @examples 
+ #' quantidade_para_cada_observacao(variavel = dengue2013$MUNICIPIO)
+ #' quantidade_para_cada_observacao(variavel = dengue2013$RESUL_SORO, valoresPadrao = c("2", "4"))
+ #' @export
  quantidade_para_cada_observacao <- function(coluna, valoresPadrao = NULL) { # coluna = n
    
    if(!is.null(valoresPadrao)) {
@@ -386,9 +566,12 @@
    
  } #complexidade n(chao de 2n)
 
- #CAMINHO
- #gerenciamento_dados/verificaNas.R
- 
+ #' verificaNas
+ #' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+ #' @return retorna um hash com o nome de cada coluna da tabela e os valores em branco contidos nessa coluna
+ #' @examples 
+ #' verificaNas(dengue2013)
+ #' @export
  verificaNas <- function(tabela){
    
    resultado <- c(NULL)
@@ -435,12 +618,29 @@
  #-Esta funcao recebe duas colunas de uma mesma tabela referente a datas que devem estar no formato %aaaa%mm%dd (ano, mes e dia)
  #-Recebe uma lista de valores padrao e uma coluna que servira para filtrar de acordo com determinado valor padrao.
  #-retorna a media do intervalo de tempo entre as observacoes de uma mesma linha das colunas de datas filtradas de acordo com o escolhido.
+ 
+ #' duracao_em_dias
+ #' @description 
+ #' funcao ainda em desenvolvimento, tera como objetivo o calculo da duracao media em dias de dois eventos, recebendo a data inicio x e a data final x do evento
+ #' e outras informacoes
+ #' @param coluna_data_x vetor de um dataframe com a data final do evento
+ #' @param coluna_data_y vetor de um dataframe com a data de inicio do evento
+ #' @param mediana indica se a mediana devera ser calculada
+ #' @param quantidade_dias_referencia em implementacao
+ #' @param variavelIdentificador uma variavel qualitativa do datafram sobre o qual serao determinados os eventos de interesse (quando preenchido)
+ #' @param valoresPadrao os casos que devem ser considerados para \code{variavelIdentificador}
+ #' @param formato o formato de data que deve ser utilizado
+ #' @return prints com sumarios da distribuicao da duracao do evento, media e mediana da duracao do evento
+ #' @examples 
+ #' duracao_em_dias(dengue2013$DT_NOTIFIC, dengue2013$DT_SIN_PRI, mediana = TRUE
+ #'                ,valoresPadrao = c("2", "4"), variavel_identificador = dengue_2013$RESUL_SORO)
+ #' @export
  duracao_em_dias <- function(coluna_data_x = NULL, coluna_data_y = NULL, mediana = FALSE
-                             ,quantidade_dias_referencia = NULL, valoresPadrao = NULL
-                             ,variavel_identificador = NULL, formato = NULL) { # coluna_data_x = n = coluna_data_y, valoresPadrao = m
+                             ,quantidade_dias_referencia = NULL, variavelIdentificador = NULL
+                             ,valoresPadrao = NULL, formato = NULL) { # coluna_data_x = n = coluna_data_y, valoresPadrao = m
    
    
-   if(xor(is.null(valoresPadrao), is.null(variavel_identificador))) {
+   if(xor(is.null(valoresPadrao), is.null(variavelIdentificador))) {
      
      return("valoresPadrao ou variavel de valoresPadrao nao indicados")
      
@@ -484,10 +684,10 @@
      #print(paste(total_diferenca_superior, " registros acima de ", quantidade_dias_referencia, " dias",sep = ""))
    }
    
-   if(!is.null(valoresPadrao) && !is.null(variavel_identificador)) { 
+   if(!is.null(valoresPadrao) && !is.null(variavelIdentificador)) { 
      
      
-     diferenca_de_dias <- subset(diferenca_de_dias, variavel_identificador %in% valoresPadrao) #complexidade nm
+     diferenca_de_dias <- subset(diferenca_de_dias, variavelIdentificador %in% valoresPadrao) #complexidade nm
      
      total_identificada_inferior <- sum(diferenca_de_dias <= quantidade_dias_referencia, na.rm = TRUE) #complexidade 2n
      total_identificada_superior <- sum(diferenca_de_dias > quantidade_dias_referencia, na.rm = TRUE) #complexidade 2n
@@ -518,6 +718,13 @@
  #-Esta funcao recebe uma coluna referente a alguma variavel de uma tabela
  #-Retorna a proporcao de valores vazios dessa coluna pelo total de linhas da coluna
  #-Variavel deve ser uma coluna de um data frame, ou um vetor
+ 
+ #' completitude
+ #' @param variavel um vetor, ou variavel (coluna) de um datafram sobre a qual a operacao sera realizada
+ #' @return retorna o calculo da completitude de \code{variavel}
+ #' @examples
+ #' completitude(dengue2013$SEM_NOT)
+ #' @export
  completitude <- function(variavel) { #variavel = n
    
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
@@ -531,13 +738,54 @@
    
  } #complexidade n(chao de 2n)
 
+ #***
+ #COMPOSTA PARA TABELA
+ 
+ #-Esta funcao recebe uma tabela inteira
+ #-Retorna uma tabela com a completitude de cada variavel da tabela
+ #-Funciona para valores em branco e NA
+ #-Tabela deve ser um data frame
+ 
+ #' completitude_variaveis_de_uma_tabela
+ #' @description 
+ #' Calcula a completitude de todas as variaveis (colunas) de um dataframe
+ #' @param tabela um dataframe sobre o qual sera realizada a operacao
+ #' @param registrar indica se o resultado final deve ser registrado em um documento no formato xlsx 
+ #' @return retorna um dataframe com a completitude de todas as variaveis de uma tabela
+ #' @examples 
+ #' completitude_variaveis_de_uma_tabela(tabela = dengue2013)
+ #' completitude_variaveis_de_uma_tabela(tabela = dengue2013, registrar = TRUE)
+ #' @export
+ completitude_variaveis_de_uma_tabela <- function(tabela, registrar = FALSE) { #tabela linhas = n tabela colunas = m
+   
+   numLinhas <- length(tabela) #complexidade m
+   nomeColunas <- colnames(tabela) #complexidade m
+   
+   tabVariavel_x_completitude <- data.frame(variavel = c(1:numLinhas), completitude = NA) #complexidade inteira
+   
+   
+   for(i in 1:numLinhas) {
+     
+     tabVariavel_x_completitude$variavel[i] <- nomeColunas[i] #complexidade 1
+     tabVariavel_x_completitude$completitude[i] <- completitude(as.vector(tabela[[as.character(nomeColunas[i])]])) #complexidade m + 4n
+     
+   } #complexidade 4nm + mQuadrado
+   
+   if(registrar)
+     write.xlsx(tabVariavel_x_completitude, "completitude_variaveis.xlsx")
+   
+   return(tabVariavel_x_completitude)
+   
+ } #complexidade nm(chao de 4nm) ou mQuadrado (depende do qtd de variaveis) ou nm + mQuadrado
+
  #' completitude_relacionada
+ #' @description 
  #' calcula a completitude de uma variavel de acordo com um conjunto de fatores presentes em um conjunto de variaveis de referencia
  #' @param tabela o dataframe em que os calculos serao realizados
  #' @param variaveis_de_referencia o conjunto de variaveis utilizadas como referencia, quando combinadas devem indicar uma situacao
- #' @param variavel_para_avaliacao a variavel sobre a qual será calculada a completitude
- #' @param valoresPadrao um conjunto de vetores, com os fatores de cada uma das variáveis de referência, respectivamente
- #' @example 
+ #' @param variavel_para_avaliacao a variavel sobre a qual sera calculada a completitude
+ #' @param valoresPadrao um conjunto de vetores, com os fatores de cada uma das variaveis de referencia, respectivamente
+ #' @examples 
  #' completitude_relacionada(dengue2013, ("CS_SEXO"), c("CS_GESTANT"), c(c("F")))
  #' @return Retorna a completitude da \code{variavel_para_avaliacao} contendo apenas as linhas que possuiam determinados conjuntos de fatores
  #' nas \code{variaveis_de_referencia} de acordo com os \code{valoresPadrao}
@@ -575,29 +823,175 @@
    return(retorno)
  } #complexidade n
 
- #-Esta funcao recebe uma coluna de uma tabela, e uma lista e valores que representa valores possiveis na coluna
- #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados 
+ #***
+ #Melhorar o nome da funcao logo abaixo
+ 
+ #-Esta funcao recebe uma coluna referente a alguma variavel de uma tabela, uma lista dos valores padrao da coluna
+ #e duas variaveis logicas indicando se eh uma avaliacao de intervalo ou de data
+ #-Retorna a proporcao de valores que nao estao de acordo com os valores padroes, e indica quais sao estes.
+ #-Variavel deve ser uma coluna de uma data frame, ou um vetor
+ #-ValoresPadrao deve ser uma coluna de um data frame, ou um vetor(mesmo que possua apenas um valor)
+ #-ValoresPadrao deve apresentar o menor valor na primeira posicao, e o maior na segunda caso intervalo seja TRUE
+ #***
+ #como tratar os valores nulos? 
+ #***
+ #Refatorar funcao para melhorar a usabilidade
+ #estah eh a validade?
+ 
+ #' validade
+ #' @description 
+ #' Calcula a validade para um vetor
+ #' @param variavel um vetor, normalmente proveniente de uma variavel de um dataframe, ao qual serao realizadas as operacoes
+ #' @param valoresPadrao indica todos os valores que a \code{variavel} de fatores sobre a qual sera realizada a operacao deve conter
+ #' @param data indica se a \code{variavel} de fatores possui o formato de data
+ #' @param formatoData indica qual formato de data a funcao deve considerar, so pode ser utilizada se \code{data} for verdadeiro
+ #' @return retorna a validade de \code{variavel} em character
+ #' @examples 
+ #' validade(variavel = dengue2013$RESUL_SORO, valoresPadrao = c("1", "2", "3","4"))
+ #' validade(variavel = dengue2013$DT_NOTIFIC, valoresPadrao = c("2013/01/01","2013/12/01"), data = TRUE)
+ #' -O valor a esquerda em valores padrao eh o limite inferior (por exemplo se quiser incluir 1000, coloque 999)
+ #' -O valor a direita em valores padrao eh o limite superior (por exemplo, se quiser incluir 3000, coloque 3001)
+ #' validade(dengue_2013$NU_IDADE_N, valoresPadrao = c("1000", "3000"), intervalo = TRUE) 
+ #' @export
+ validade <- function(variavel, valoresPadrao, intervalo = FALSE
+                             , data = FALSE, formatoData = NULL) { #variavel = n, valoresPadrao = m
+   
+   if((data == TRUE) && (intervalo == TRUE)) {
+     
+     return("data e intervalo nao podem ser simultaneamente verdadeiros")
+     
+   } else {
+     
+     variavel <- as.character(variavel) #complexidade n
+     # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n
+     totalVariavel <- length(variavel) #complexidade n
+     
+   }
+   
+   if((data == FALSE) && (intervalo == FALSE)) {
+     
+     totalCorretos <- sum(is.na(variavel))
+     
+     variavel <- variavel[!is.na(variavel)] #complexidade n
+     
+     #***
+     #as funcoes apply podem ser facilmente empregadas aqui?
+     for(i in 1:length(valoresPadrao)) { 
+       
+       totalCorretos <- totalCorretos + sum(variavel == valoresPadrao[i], na.rm = TRUE) #complexidade n
+       
+     } #complexidade m.n, com m << n 
+     
+     #Encontra as posicoes em que existem variaveis que nao estão na lista de variaveis padrao
+     variavelIncongruentes <- c(variavel[is.na(match(variavel, valoresPadrao))]) #complexidade n
+     variavelIncongruentes <- variavelIncongruentes[!is.na(variavelIncongruentes)]
+     
+     if(length(variavelIncongruentes) == 0) {
+       variavelIncongruentes <- "vazia"
+     }
+     
+     proporcao <- 100 - ((totalCorretos/totalVariavel) * 100) #complexidade n
+     
+     return(paste(proporcao, "% ", "de valores incongruentes ||| "
+                  , "lista de valores incongruentes: ", toString(levels(as.factor(variavelIncongruentes))), sep = "")) #complexidade x << n
+     
+     
+   }
+   
+   if(data == TRUE) {
+     #checa se ha alguma observacao que nao seja uma data
+     
+     #Caso tenha sido imposto um formato, o utiliza, caso contrario realiza uma chamada padrao
+     if(is.null(formatoData)) { 
+       
+       totalCorretos <- sum(!is.na(as.Date(variavel))) #complexidade 2n
+       
+     } else {
+       
+       totalCorretos <- sum(!is.na(as.Date(variavel, format = formatoData))) #complexidade 2n
+       
+     }
+     
+     proporcao <- 100 - ((totalCorretos/totalVariavel) * 100) #complexidade n
+     return(paste(proporcao, "% ", "de valores incongruentes", sep = ""))
+     
+   }
+   
+   if(intervalo == TRUE) {
+     
+     if(length(valoresPadrao) != 2) {
+       return("Intervalo invalido")
+     }
+     
+     #checa se ha alguma informacao fora do intervalo definido
+     variavel <- as.numeric(variavel)
+     valoresPadrao <- as.numeric(valoresPadrao)
+     totalCorretos <- sum((variavel < valoresPadrao[2]) & (variavel > valoresPadrao[1]), na.rm = TRUE) #complexidade 3n
+     proporcao <- 100 - ((totalCorretos/totalVariavel) * 100) #complexidade n
+     return(paste(proporcao, "% ", "de valores incongruentes", sep = ""))
+     
+   }
+   
+   return("erro, entrada incapaz de ser executada")
+   
+ } #complexidade n.m
+
+ #-Esta funcao recebe uma coluna de uma tabela, e uma lista de valores que representa valores possiveis na coluna
+ #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados
  
  #' representatividade
+ #' @description 
  #' calcula a representatividade de um conjunto de fatores em uma variavel
  #' @param variavel a variavel de um dataframe que contenha valores categoricos (fatores)
  #' @param valoresPadrao o conjunto de fatores sobre os quais sera calculada a representatividade
- #' @example 
+ #' @examples
  #' representatividade(dengue_2013$RESUL_SORO, c("2","4"))
  #' @export
  representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
-   
+ 
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
-   
+ 
    variavelFiltrada <- subset(variavel, variavel %in% valoresPadrao) #complexidade nm
-   
+ 
    quantidadeDado <- length(variavelFiltrada) #complexidade n(chao de 2n)
    total <- length(variavel) #complexidade n
-   
+ 
    retorno <- (quantidadeDado/total) * 100 #complexidade n
    return(paste("representatividade: ", retorno, "%", sep = ""))
-   
+ 
  } #complexidade nm
+
+ #-Esta funcao recebe duas colunas de uma tabela, que devem possuir tamanho igual. Tambem recebe dois vetores de valores possiveis na tabela.
+ #-Retorna a porcentagem dos valores de valoresPadrao encontrados na colunaAlvo, que possuem tambem os valoresFiltro na colunaFiltro
+ #' representatividadeCondicionada
+ #' @description 
+ #' funcao que calcula a representavidade de uma variavel, de acordo com uma variavel referencia de fatores (para um conjunto de fatores)
+ #' @param colunaFiltro recebe a coluna de um dataframe que registra os fatores
+ #' @param valoresFiltro recebe os fatores da variavel \code{colunaFiltro} que serao utilizados
+ #' @param colunaAlvo recebe a coluna do mesmo dataframe que \code{colunaFiltro} do qual sera calculada a representatividade
+ #' @param valoresPadrao o conjunto de fatores que irao ser calculados perante o total de observacoes
+ #' @return Retorna a porcentagem dos valores de \code{valoresPadrao} encontrados na \code{colunaAlvo}, que possuem tambem os \code{valoresFiltro} na \code{colunaFiltro}
+ #' @examples
+ #' representatividadeCondicionada(colunaFiltro = dengue2013$RESUL_SORO, 
+ #'                                valoresFiltro = c("2","4"), 
+ #'                                colunaAlvo = dengue2013$NU_ANO, 
+ #'                                valoresPadrao = c("2013")
+ #'                                )
+ #' @export
+ representatividadeCondicionada <- function(colunaFiltro, valoresFiltro, colunaAlvo, valoresPadrao) { #colunaFiltro = n = colunaAlvo, valoresFiltro = t, valoresPadrao = j
+   
+   if(is.null(colunaFiltro) || is.null(valoresFiltro) || is.null(colunaAlvo) || is.null(valoresPadrao)) {
+     return("valores passados a funcao sao invalidos")
+   } #complexidade 2n + t + j
+   
+   # colunaFiltro <- valores_em_branco_para_NA(variavel = colunaFiltro) #complexidade n
+   # colunaAlvo <- valores_em_branco_para_NA(variavel = colunaAlvo) #complexidade n
+   
+   colunaFiltrada <- subset(colunaAlvo, colunaFiltro %in% valoresFiltro) #complexidade nt
+   
+   representatividade(colunaFiltrada, valoresPadrao) #complexidade nj
+   
+ } #complexidade nt + nj
 
  #***
  #Padrao de programacao:
@@ -620,33 +1014,33 @@
  # source("biblioteca/funcionais.R")
  
  
- #-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a 
+ #-Esta funcao recebe uma coluna de uma tabela, e dois textos referentes a: A chave correspondente a
  #uma confirmacao do caso verdadeira(chavePositivo), e a chave correspondente a um falso positivo(chave_falso_positivo)
  #-retorna a porcentagem dos valores positivos que eram verdadeiros
  
  #' porcentagem_verdadeiro_positivo
  #' @param variavel a variavel de um dataframe com os fatores investigados
- #' @param chavePositvo os fatores indicando quais são os fatores verdadeiramente positivos
+ #' @param chavePositvo os fatores indicando quais sao os fatores verdadeiramente positivos
  #' @param chave_falso_positivo os fatores indicando quais sao os fatores que representam casos aferidos erroneamente como positivos
- #' @example 
- #' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4") #supondo que 2 seja positivo e 4 seja falso positivo
+ #' @examples
+ #' porcentagem_verdadeiro_positivo(dengue2013$RESUL_SORO, "2", "4")
  #' @return  retorna a porcentagem dos valores positivos que eram verdadeiros
  porcentagem_verdadeiro_positivo <- function(variavel, chavePositivo, chave_falso_positivo) {# variavel = n chavePositivo = 1 chave_falso_positivo = 1
-   
+ 
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
-   
+ 
    quantidadePositivo <- sum(variavel == chavePositivo, na.rm = TRUE) #complexidade n(chao de 2n)
    quantidade_falso_positivo <- sum(variavel == chave_falso_positivo, na.rm = TRUE) #complexidade n(chao de 2n)
-   
+ 
    retorno <- ((quantidadePositivo)/(quantidadePositivo + quantidade_falso_positivo)) * 100 #complexidade 3
    return(retorno)
-   
+ 
  } #complexidade n(chao de 2n)
 
  #Esta funcao funcionara para as duas formulas do eslaide 15
  casos_hospitalizados <- function(variavelX, variavelY) {
-   
-   
+ 
+ 
  } #nao entendi bem da forma como esta colocada esta avaliacao no eslaide(ver com Marcela).
 
  #eslaide 16 nao possui formula definida
@@ -661,60 +1055,61 @@
  #coluna data de nascimento
  #-Se for uma coluna de idades inteiras, apenas cria a extratificacao segundo escolhido. Se for uma coluna de datas, calcula as idades e depois calcula os extratos.
  #-Retorna a mesma tabela com a variavel adicional de extratos agregada ao seu final
-  
+ 
  #'  extratificacaoIdade
+ #'  @description 
  #'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
- #' 
+ #'
  #' @param tabela o dataframe ao qual serah adicionada a nova coluna
  #' @param coluna a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)
  #' @param extratos a definicao dos extratos nos quais havera a divisao
  #' @param nomesExtratos os nomes dos extratos definidos
  #' @param nomeNovaColuna nome da coluna que sera adicionada ao dataframe com os novos extratos
  #' @param coluna_eh_data_nascimento informa se a coluna apresenta informacoes de data de nascimento
- #' @param formatoData informa o formato em que a data está respresentada. Obs: O parâmetro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro. 
- #' @return O dataframe \code{tabela} com uma nova variável representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrão.
- #' @example 
- #' extratificacaoIdade(tabela = dengue2013, 
- #'                     coluna = dengue2013$DT_NASC, 
- #'                     coluna_eh_data_nascimento = TRUE, 
+ #' @param formatoData informa o formato em que a data esta respresentada. Obs: O parametro só pode ser preenchido se coluna_eh_data_nascimento for verdadeiro.
+ #' @return O dataframe \code{tabela} com uma nova variavel representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrao.
+ #' @examples
+ #' extratificacaoIdade(tabela = dengue2013,
+ #'                     coluna = dengue2013$DT_NASC,
+ #'                     coluna_eh_data_nascimento = TRUE,
  #'                     nomesExtratos = c("<1", "1-4", "5-9", "10-19", "20-29", "30-29", "40-49", "50-59", "60-69", "70+")
  #')
- #' @export  
+ #' @export
  extratificacaoIdade <- function(tabela, coluna, extratos = NULL, nomesExtratos = NULL, nomeNovaColuna = NULL, coluna_eh_data_nascimento = FALSE, formatoData = NULL) {
-   
+ 
    resultado <- NULL
-   
+ 
    if(is.null(nomeNovaColuna)) {
      nomeNovaColuna <- "idade_extrato"
    }
-   
+ 
    if(is.null(extratos)) {
      extratos <- c(0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 150)
    }
-   
+ 
    if(coluna_eh_data_nascimento) {
-     
+ 
      if(is.null(formatoData)) {
        coluna <- year(strptime(Sys.Date(), format = "%Y-%m-%d"))-
                      year(strptime(coluna, format = "%Y-%m-%d"))
-     
+ 
      } else {
        coluna <- year(strptime(Sys.Date(), format = "%Y-%m-%d"))-
                      year(strptime(coluna, format = formatoData))
      }
    }
-   
+ 
    resultado <- tabela
-   
+ 
    if(is.null(nomesExtratos)) {
-   
+ 
      resultado[[nomeNovaColuna]] <- cut(coluna, extratos)
-   
+ 
    } else {
-     
+ 
      resultado[[nomeNovaColuna]] <- cut(coluna, extratos, labels = nomesExtratos)
-   
+ 
    }
-   
+ 
    return(resultado)
  }

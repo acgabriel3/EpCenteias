@@ -10,6 +10,11 @@
 #***
 #Posso utilizar aqui um swich
 
+#' aplicador_tabelas
+#' funcao ainda em desenvolvimento que aplica uma funcao a todas as variaveis de uma tabela
+#' @param tabela o dataframe sobre o qual sera realizada a operacao
+#' @param funcao em aplicacao
+#' @param funcao2 em aplicacao
 aplicador_tabelas <- function(tabela, funcao, funcao2 = NULL, valoresPadrao = NULL, 
                               colunaBase = NULL) #conjunto de variaveis possiveis) 
   {

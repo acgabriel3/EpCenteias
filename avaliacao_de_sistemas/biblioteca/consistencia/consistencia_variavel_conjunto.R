@@ -1,6 +1,19 @@
 #Consistencia alterada
 
+#***
+#rever funcao e proposta
 
+#' consistencia_variavel_conjunto
+#' @description 
+#' funcao ainda em desenvolvimento, nao usar
+#' @param tabela um dataframe sobre o qual serao realizadas as operacoes
+#' @param colunaA a coluna de referencia
+#' @param colunasB as colunas sobre as quais sera calculada a consitencia com relacao a \code{colunaA}
+#' @param valores_padrao_A um conjunto de fatores de \code{colunaA} que serao considerados
+#' @param valores_padrao_B um conjunto e conjunto de faotes para cada \code{colunasB}
+#' @param diferenca ainda em implementacao
+#' @return retorna a consistencia com relacao a cada variavel
+#' @export
 consistencia_variavel_conjunto <- function(tabela, colunaA, colunasB, valores_padrao_A, valores_padrao_B, diferenca = FALSE) {
   
   
