@@ -2,9 +2,7 @@
 % Please edit documentation in R/code.R
 \name{extratificacaoIdade}
 \alias{extratificacaoIdade}
-\title{extratificacaoIdade
- @description 
- Constroi extratos para datas (ano de nascimento) ou valores inteiros}
+\title{extratificacaoIdade}
 \usage{
 extratificacaoIdade(
   tabela,
@@ -35,9 +33,7 @@ extratificacaoIdade(
 O dataframe \code{tabela} com uma nova variavel representando a \code{coluna} extratificada com os \code{extratos} definidos, ou padrao.
 }
 \description{
-extratificacaoIdade
- @description 
- Constroi extratos para datas (ano de nascimento) ou valores inteiros
+Constroi extratos para datas (ano de nascimento) ou valores inteiros
 }
 \examples{
 extratificacaoIdade(tabela = dengue2013,

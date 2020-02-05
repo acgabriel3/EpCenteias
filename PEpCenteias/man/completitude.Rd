@@ -7,7 +7,7 @@
 completitude(variavel)
 }
 \arguments{
-\item{variavel}{um vetor, ou variavel (coluna) de um datafram sobre a qual a operacao sera realizada}
+\item{variavel}{um vetor, ou variavel (coluna) de um dataframe sobre a qual a operacao sera realizada}
 }
 \value{
 retorna o calculo da completitude de \code{variavel}

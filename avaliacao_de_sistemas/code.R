@@ -720,22 +720,22 @@
  #-Variavel deve ser uma coluna de um data frame, ou um vetor
  
  #' completitude
- #' @param variavel um vetor, ou variavel (coluna) de um datafram sobre a qual a operacao sera realizada
+ #' @param variavel um vetor, ou variavel (coluna) de um dataframe sobre a qual a operacao sera realizada
  #' @return retorna o calculo da completitude de \code{variavel}
  #' @examples
  #' completitude(dengue2013$SEM_NOT)
  #' @export
  completitude <- function(variavel) { #variavel = n
-   
+ 
    # variavel <- valores_em_branco_para_NA(variavel = variavel) #complexidade n(chao de 2n)
-   
+ 
    linhasVazias <- sum(is.na(variavel), na.rm = TRUE) #complexidade n
    totalLinhas <- length(variavel) #complexidade n
-   
+ 
    resultado <- (linhasVazias/totalLinhas) * 100 #complexidade n(chao de 2n)
-   
+ 
    return(resultado)
-   
+ 
  } #complexidade n(chao de 2n)
 
  #***
@@ -940,12 +940,12 @@
  #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados
  
  #' representatividade
- #' @description 
+ #' @description
  #' calcula a representatividade de um conjunto de fatores em uma variavel
  #' @param variavel a variavel de um dataframe que contenha valores categoricos (fatores)
  #' @param valoresPadrao o conjunto de fatores sobre os quais sera calculada a representatividade
  #' @examples
- #' representatividade(dengue_2013$RESUL_SORO, c("2","4"))
+ #' representatividade(dengue2013$RESUL_SORO, c("2","4"))
  #' @export
  representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
  
@@ -1056,10 +1056,9 @@
  #-Se for uma coluna de idades inteiras, apenas cria a extratificacao segundo escolhido. Se for uma coluna de datas, calcula as idades e depois calcula os extratos.
  #-Retorna a mesma tabela com a variavel adicional de extratos agregada ao seu final
  
- #'  extratificacaoIdade
- #'  @description 
- #'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
- #'
+ #' extratificacaoIdade
+ #' @description
+ #' Constroi extratos para datas (ano de nascimento) ou valores inteiros
  #' @param tabela o dataframe ao qual serah adicionada a nova coluna
  #' @param coluna a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)
  #' @param extratos a definicao dos extratos nos quais havera a divisao

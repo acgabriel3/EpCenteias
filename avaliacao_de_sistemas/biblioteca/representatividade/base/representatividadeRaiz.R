@@ -3,12 +3,12 @@
 #-retorna a porcentagem de observacoes da coluna que sao iguais aos valores setados
 
 #' representatividade
-#' @description 
+#' @description
 #' calcula a representatividade de um conjunto de fatores em uma variavel
 #' @param variavel a variavel de um dataframe que contenha valores categoricos (fatores)
 #' @param valoresPadrao o conjunto de fatores sobre os quais sera calculada a representatividade
 #' @examples
-#' representatividade(dengue_2013$RESUL_SORO, c("2","4"))
+#' representatividade(dengue2013$RESUL_SORO, c("2","4"))
 #' @export
 representatividade <- function(variavel, valoresPadrao) {#variavel = n, valoresPadrao = m
 

@@ -9,10 +9,9 @@
 #-Se for uma coluna de idades inteiras, apenas cria a extratificacao segundo escolhido. Se for uma coluna de datas, calcula as idades e depois calcula os extratos.
 #-Retorna a mesma tabela com a variavel adicional de extratos agregada ao seu final
 
-#'  extratificacaoIdade
-#'  @description 
-#'  Constroi extratos para datas (ano de nascimento) ou valores inteiros
-#'
+#' extratificacaoIdade
+#' @description
+#' Constroi extratos para datas (ano de nascimento) ou valores inteiros
 #' @param tabela o dataframe ao qual serah adicionada a nova coluna
 #' @param coluna a coluna que sera extratificada (podendo ser numeric ou datas de nascimento)
 #' @param extratos a definicao dos extratos nos quais havera a divisao

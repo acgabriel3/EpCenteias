@@ -15,5 +15,5 @@ representatividade(variavel, valoresPadrao)
 calcula a representatividade de um conjunto de fatores em uma variavel
 }
 \examples{
-representatividade(dengue_2013$RESUL_SORO, c("2","4"))
+representatividade(dengue2013$RESUL_SORO, c("2","4"))
 }
