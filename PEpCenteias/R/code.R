@@ -520,7 +520,7 @@
    clearhistory()
    text <- readLines('.Rhistory')
    file.remove('.Rhistory')
-   text <- text[!(text == 'savehistory()' | text == 'salvarComando()')]
+   text <- text[!((text == 'savehistory()') | (text == 'salvarComando()')|(text == '') | (text == ' '))]
    write(paste("---data:", Sys.time(),"---autor:", pkg.globals$autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
    write(text, 'logComand.txt', append = TRUE)
  
