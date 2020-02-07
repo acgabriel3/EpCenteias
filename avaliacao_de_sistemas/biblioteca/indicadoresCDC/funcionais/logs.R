@@ -1,9 +1,14 @@
-autor <- ''
 
+pkg.globals <- new.env()
 
+pkg.globals$autor <- 'desconhecido'
+
+#' define o autor para os logs
+#' 
+#' @param nome o nome do ator que estah trabalhando com o pacote
 #' @export
 definirAutor <- function(nome) {
-  autor <<- nome
+  pkg.globals$autor <- nome
 }
 
 clearhistory <- function() {
@@ -21,7 +26,7 @@ salvarComando <- function() {
   text <- readLines('.Rhistory')
   file.remove('.Rhistory')
   text <- text[!(text == 'savehistory()' | text == 'salvarComando()')]
-  write(paste("---data:", Sys.time(),"---autor:", autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
+  write(paste("---data:", Sys.time(),"---autor:", pkg.globals$autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
   write(text, 'logComand.txt', append = TRUE)
 
 }

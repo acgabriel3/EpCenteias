@@ -494,11 +494,16 @@
    
  } #complexidade n(chao de 2n)
 
- autor <- ''
+ pkg.globals <- new.env()
 
+ pkg.globals$autor <- 'desconhecido'
+
+ #' define o autor para os logs
+ #' 
+ #' @param nome o nome do ator que estah trabalhando com o pacote
  #' @export
  definirAutor <- function(nome) {
-   autor <<- nome
+   pkg.globals$autor <- nome
  }
 
  clearhistory <- function() {
@@ -516,7 +521,7 @@
    text <- readLines('.Rhistory')
    file.remove('.Rhistory')
    text <- text[!(text == 'savehistory()' | text == 'salvarComando()')]
-   write(paste("---data:", Sys.time(),"---autor:", autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
+   write(paste("---data:", Sys.time(),"---autor:", pkg.globals$autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
    write(text, 'logComand.txt', append = TRUE)
  
  }
@@ -607,14 +612,17 @@
  #***
  #Prototipo para o relatorio
  
- paragraph <- 
- 'estrutura bla bla
- #1 
- olha execute isso'
+ pkg.globals <- new.env()
 
+ pkg.globals$paragrafo <- 
+ 'estrutura nao definida'
+
+ #' define paragrafo a ser escrito
+ #' 
+ #' @param paragrafo o paragrafo que serah escrito antes das funcoes registradas no relatorio rmd
  #' @export
- definirParagrafo <- function(paragrafo) {
-   paragraph <<- paragrafo
+ definirParagrafo <- function(texto) {
+   pkg.globals$texto <<- texto
  }
 
  clearhistory <- function() {
@@ -625,6 +633,7 @@
 
  #***
  #Pode ser utilizado tambem para a criacao de relatorios automaticos e textos por meio do programa
+ #' @export
  salvar_comando_rel <- function() {
    
    if(sum(dir() == 'relatorio.rmd') == 0) {
@@ -641,7 +650,7 @@
    text <- readLines('.Rhistory')
    file.remove('.Rhistory')
    text <- text[!(text == 'savehistory()' | text == 'salvar_comando_rel()')]
-   write(paragraph, 'relatorio.rmd', append = TRUE)
+   write(pkg.globals$paragraph, 'relatorio.rmd', append = TRUE)
    write('```{r}', 'relatorio.rmd', append = TRUE)
    write(text, 'relatorio.rmd', append = TRUE)
    write('```', 'relatorio.rmd', append = TRUE)
