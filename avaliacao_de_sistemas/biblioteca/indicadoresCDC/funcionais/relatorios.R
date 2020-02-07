@@ -1,7 +1,7 @@
 #***
 #Prototipo para o relatorio
 
-
+#' @export
 paragraph <- 
 'estrutura bla bla
 #1 

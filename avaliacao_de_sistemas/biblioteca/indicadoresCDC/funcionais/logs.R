@@ -1,4 +1,9 @@
-name <- 'Gabriel Alves Castro'
+
+#'  variavel de autor
+#'  @description 
+#'  seta o autor que esta escrevendo no momento
+#'  @export
+autor <- 'Gabriel Alves Castro'
 
 clearhistory <- function() {
   write("", file="a.txt")
@@ -15,7 +20,7 @@ salvarComando <- function() {
   text <- readLines('.Rhistory')
   file.remove('.Rhistory')
   text <- text[!(text == 'savehistory()' | text == 'salvarComando()')]
-  write(paste("---data:", Sys.time(),"---autor:", name, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
+  write(paste("---data:", Sys.time(),"---autor:", autor, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
   write(text, 'logComand.txt', append = TRUE)
 
 }
