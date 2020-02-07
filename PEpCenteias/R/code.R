@@ -494,6 +494,39 @@
    
  } #complexidade n(chao de 2n)
 
+ name <- 'Gabriel Alves Castro'
+
+ clearhistory <- function() {
+   write("", file="a.txt")
+   loadhistory("a.txt")
+   file.remove("a.txt")
+ }
+
+ #***
+ #Pode ser utilizado tambem para a criacao de relatorios automaticos e textos por meio do programa
+ salvarComando <- function() {
+   
+   savehistory()
+   clearhistory()
+   text <- readLines('.Rhistory')
+   file.remove('.Rhistory')
+   text <- text[!(text == 'savehistory()' | text == 'salvarComando()')]
+   write(paste("---data:", Sys.time(),"---autor:", name, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
+   write(text, 'logComand.txt', append = TRUE)
+ 
+ }
+
+ # clearhistory()
+ # 
+ # completitude_variaveis_de_uma_tabela(dengue2013) #precisa registrar um log das operacoes ---> Isto seria em RMarkdDown ou um txt comum? 
+ # saveCommand()
+ # 
+ # a <- function() {
+ #   print('oi')
+ # }
+ # saveCommand()
+ 
+
  #CAMINHO
  #biblioteca/funcionais/quantidade_de_observacoes.R
  
@@ -565,6 +598,50 @@
    return(retorno)
    
  } #complexidade n(chao de 2n)
+
+ #***
+ #Prototipo para o relatorio
+ 
+ 
+ paragraph <- 
+ 'estrutura bla bla
+ #1 
+ olha execute isso'
+
+ clearhistory <- function() {
+   write("", file="a.txt")
+   loadhistory("a.txt")
+   file.remove("a.txt")
+ }
+
+ #***
+ #Pode ser utilizado tambem para a criacao de relatorios automaticos e textos por meio do programa
+ salvar_comando_rel <- function() {
+   
+   if(sum(dir() == 'relatorio.rmd') == 0) {
+     write( '---
+ title: "relatorio"
+ output: html_notebook
+ ---
+ ', 'relatorio.rmd', append = TRUE)
+   }
+   
+   
+   savehistory()
+   clearhistory()
+   text <- readLines('.Rhistory')
+   file.remove('.Rhistory')
+   text <- text[!(text == 'savehistory()' | text == 'salvar_comando_rel()')]
+   write(paragraph, 'relatorio.rmd', append = TRUE)
+   write('```{r}', 'relatorio.rmd', append = TRUE)
+   write(text, 'relatorio.rmd', append = TRUE)
+   write('```', 'relatorio.rmd', append = TRUE)
+ 
+ }
+
+ # clearhistory()
+ # print('Olah mundo dos relatorios')
+ # saveCommand()
 
  #' verificaNas
  #' @param tabela um dataframe sobre o qual serao realizadas as operacoes
@@ -790,7 +867,7 @@
  #' @return Retorna a completitude da \code{variavel_para_avaliacao} contendo apenas as linhas que possuiam determinados conjuntos de fatores
  #' nas \code{variaveis_de_referencia} de acordo com os \code{valoresPadrao}
  #' @export
- completitude_relacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
+ completitudeRelacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
                                       
  ) { #variavel_de_referencia = n = variavel_para_avaliacao  valoresPadrao = m
    
@@ -1111,4 +1188,47 @@
    }
  
    return(resultado)
+ }
+
+ #***
+ #Acoplando funcoes e log de funcoes
+ 
+ auxC <- completitude_variaveis_de_uma_tabela
+
+ completitude_variaveis_de_uma_tabela <- function(tabela, registrar = FALSE, log = TRUE) {
+   
+   
+   resultado <- auxC(tabela = tabela, registrar = registrar)
+   
+   if(log)
+     salvarComando()
+       
+   return(resultado)
+   
+ }
+
+ auxCB <- completitude
+
+ completitude <- function(variavel, log = TRUE) {
+   
+   resultado <- auxCB(variavel = variavel)
+   
+   if(log)
+     salvarComando()
+   
+   return(resultado)
+   
+ }
+
+ auxCR <- completitudeRelacionada
+
+ completitudeRelacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL, log = TRUE) {
+   
+   resultado <- auxCR(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao)
+   
+   if(log)
+     salvarComando()
+   
+   return(resultado)
+   
  }

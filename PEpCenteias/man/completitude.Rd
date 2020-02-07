@@ -4,7 +4,7 @@
 \alias{completitude}
 \title{completitude}
 \usage{
-completitude(variavel)
+completitude(variavel, log = TRUE)
 }
 \arguments{
 \item{variavel}{um vetor, ou variavel (coluna) de um dataframe sobre a qual a operacao sera realizada}

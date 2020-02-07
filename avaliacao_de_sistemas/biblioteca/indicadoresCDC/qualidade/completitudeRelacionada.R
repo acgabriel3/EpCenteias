@@ -12,7 +12,7 @@
 #' @return Retorna a completitude da \code{variavel_para_avaliacao} contendo apenas as linhas que possuiam determinados conjuntos de fatores
 #' nas \code{variaveis_de_referencia} de acordo com os \code{valoresPadrao}
 #' @export
-completitude_relacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
+completitudeRelacionada <- function(tabela, variaveis_de_referencia, variavel_para_avaliacao, valoresPadrao = NULL
                                      
 ) { #variavel_de_referencia = n = variavel_para_avaliacao  valoresPadrao = m
   

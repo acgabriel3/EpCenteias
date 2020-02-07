@@ -2,7 +2,7 @@
 
 export(aplicacao_todas_as_colunas)
 export(completitude)
-export(completitude_relacionada)
+export(completitudeRelacionada)
 export(completitude_variaveis_de_uma_tabela)
 export(consistencia)
 export(consistencia_variavel_conjunto)
