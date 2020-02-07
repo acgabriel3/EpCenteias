@@ -494,11 +494,12 @@
    
  } #complexidade n(chao de 2n)
 
- #'  variavel de autor
- #'  @description 
- #'  seta o autor que esta escrevendo no momento
- #'  @export
- autor <- 'Gabriel Alves Castro'
+ autor <- ''
+
+ #' @export
+ definirAutor <- function(nome) {
+   autor <<- nome
+ }
 
  clearhistory <- function() {
    write("", file="a.txt")
@@ -606,11 +607,15 @@
  #***
  #Prototipo para o relatorio
  
- #' @export
  paragraph <- 
  'estrutura bla bla
  #1 
  olha execute isso'
+
+ #' @export
+ definirParagrafo <- function(paragrafo) {
+   paragraph <<- paragrafo
+ }
 
  clearhistory <- function() {
    write("", file="a.txt")

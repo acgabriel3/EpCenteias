@@ -1,9 +1,10 @@
+autor <- ''
 
-#'  variavel de autor
-#'  @description 
-#'  seta o autor que esta escrevendo no momento
-#'  @export
-autor <- 'Gabriel Alves Castro'
+
+#' @export
+definirAutor <- function(nome) {
+  autor <<- nome
+}
 
 clearhistory <- function() {
   write("", file="a.txt")

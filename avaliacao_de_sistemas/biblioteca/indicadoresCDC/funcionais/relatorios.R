@@ -1,11 +1,15 @@
 #***
 #Prototipo para o relatorio
 
-#' @export
 paragraph <- 
 'estrutura bla bla
 #1 
 olha execute isso'
+
+#' @export
+definirParagrafo <- function(paragrafo) {
+  paragraph <<- paragrafo
+}
 
 
 clearhistory <- function() {
