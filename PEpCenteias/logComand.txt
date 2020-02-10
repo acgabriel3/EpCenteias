@@ -1,0 +1,97 @@
+---data: 2020-02-10 18:01:56 ---Analista:  ---comando:
+---nota: 
+pkg.globals <- new.env()
+pkg.globals$Analista <- 'desconhecido'
+#' define o autor para os logs
+#'
+#' @param nome o nome do ator que estah trabalhando com o pacote
+#' @export
+definirAnalista <- function(nome) {
+pkg.globals$Analista <- nome
+}
+clearhistory <- function() {
+write("", file="a.txt")
+loadhistory("a.txt")
+file.remove("a.txt")
+}
+#***
+#Pode ser utilizado tambem para a criacao de relatorios automaticos e textos por meio do programa
+salvarComando <- function(nota) {
+clearhistory()
+text <- readLines('.Rhistory')
+file.remove('.Rhistory')
+text <- text[!((text == 'savehistory()') | (text == 'salvarComando()')|(is.na(text)))]
+write(paste("---data:", Sys.time(),"---Analista:", pkg.globals$analista, '---comando:', sep = " "), 'logComand.txt', append = TRUE)
+write(paste( '---nota:' ,as.character(nota), sep = " "), 'logComand.txt', append = TRUE)
+write(text, 'logComand.txt', append = TRUE)
+}
+View(den])
+View(dengue2013)
+teste <- readLines('code.R')
+teste
+write(teste, file = 'testinho.R')
+source('biblioteca.R')
+source('biblioteca.R')
+source('biblioteca.R')
+source('biblioteca.R')
+setwd("D:/curso_ciencia_da_computacao/pesq.prof.Jorge/centeias/desenvolvimento/EpCenteias/PEpCenteias")
+check(cleanup = FALSE, manual = TRUE, path = getwd())
+getwd()
+check(manual = TRUE, path = getwd())
+load("D:/curso_ciencia_da_computacao/pesq.prof.Jorge/centeias/desenvolvimento/EpCenteias/PEpCenteias/data/dengue2013.rda")
+check(manual = TRUE, path = getwd())
+R CMD Rd2pdf mypackage
+R
+build_manual(path=getwd())
+install.packages("pdflatex")
+install.packages("Rd2pdf")
+library(PEpCenteias)
+load(dengue2013)
+load('dengue2013')
+load('PEpCenteias/dengue2013')
+load('PEpCenteias')
+library(PEpCenteias)
+rm(dengue2013)
+library(PEpCenteias)
+pkg.globals
+View(pkg.globals)
+definirAnalista('Gabriel Alves Castro')
+View(pkg.globals)
+is.null(teseessf)
+library(dengue2013)
+library(PEpCenteias/dengue2013)
+library('PEpCenteias/dengue2013')
+document()
+build_manual(path=getwd())
+library(PEpCenteias)
+library(PEpCenteias)
+library(PEpCenteias)
+detach("package:PEpCenteias", unload = TRUE)
+library(PEpCenteias)
+definirAnalista('eu')
+data("dengue2013")
+force(dengue2013)
+receive <- data("dengue2013")
+teste <- 'a'
+a <- fera
+a <- fread('data-raw/dengue2013.csv')
+dengue2013$V1
+dengue2013$CS_RACA
+rm(receive)
+rm(teste)
+Sys.getenv()
+Sys.getenv('PATH')
+Sys.setenv(PATH=paste(Sys.getenv("PATH"),"C:/Program Files/MiKTeX 2.9/miktex/bin/x64/",sep=";"))
+Sys.getenv('PATH')
+build_manual(path=getwd())
+gsub('a;;', 'a;' Sys.getenv('PATH'))
+gsub('a;;', 'a;', Sys.getenv('PATH'))
+Sys.setenv(PATH=gsub('a;;', 'a;', Sys.getenv('PATH')))
+build_manual()
+build_manual()
+build_manual()
+tools::texi2pdf()
+tools::texi2pdf('oi')
+tools::texi2pdf(code.R)
+tools::texi2pdf(file = 'code.R')
+completitude_variaveis_de_uma_tabela(dengue2013, registrar = TRUE)
