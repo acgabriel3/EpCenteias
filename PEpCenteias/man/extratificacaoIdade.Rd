@@ -11,7 +11,8 @@ extratificacaoIdade(
   nomesExtratos = NULL,
   nomeNovaColuna = NULL,
   coluna_eh_data_nascimento = FALSE,
-  formatoData = NULL
+  formatoData = NULL,
+  nota = NULL
 )
 }
 \arguments{

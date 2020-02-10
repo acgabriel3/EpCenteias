@@ -9,7 +9,8 @@ validade(
   valoresPadrao,
   intervalo = FALSE,
   data = FALSE,
-  formatoData = NULL
+  formatoData = NULL,
+  nota = NULL
 )
 }
 \arguments{

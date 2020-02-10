@@ -4,7 +4,7 @@
 \alias{verificaNas}
 \title{verificaNas}
 \usage{
-verificaNas(tabela)
+verificaNas(tabela, nota = NULL)
 }
 \arguments{
 \item{tabela}{um dataframe sobre o qual serao realizadas as operacoes}

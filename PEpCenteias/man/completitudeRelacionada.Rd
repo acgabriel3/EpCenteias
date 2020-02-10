@@ -9,7 +9,7 @@ completitudeRelacionada(
   variaveis_de_referencia,
   variavel_para_avaliacao,
   valoresPadrao = NULL,
-  log = TRUE
+  nota = NULL
 )
 }
 \arguments{

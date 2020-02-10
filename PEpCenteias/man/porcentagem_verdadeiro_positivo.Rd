@@ -4,7 +4,12 @@
 \alias{porcentagem_verdadeiro_positivo}
 \title{porcentagem_verdadeiro_positivo}
 \usage{
-porcentagem_verdadeiro_positivo(variavel, chavePositivo, chave_falso_positivo)
+porcentagem_verdadeiro_positivo(
+  variavel,
+  chavePositivo,
+  chave_falso_positivo,
+  nota = NULL
+)
 }
 \arguments{
 \item{variavel}{a variavel de um dataframe com os fatores investigados}

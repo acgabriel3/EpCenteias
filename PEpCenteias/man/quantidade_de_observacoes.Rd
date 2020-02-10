@@ -4,7 +4,7 @@
 \alias{quantidade_de_observacoes}
 \title{quantidade_de_observacoes}
 \usage{
-quantidade_de_observacoes(variavel, valoresPadrao = NULL)
+quantidade_de_observacoes(variavel, valoresPadrao = NULL, nota = NULL)
 }
 \arguments{
 \item{variavel}{recebe um vetor de fatores}

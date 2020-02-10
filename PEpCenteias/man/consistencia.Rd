@@ -11,7 +11,8 @@ consistencia(
   data = TRUE,
   valoresPadrao = NULL,
   valores_padrao_adicionais = NULL,
-  formato = NULL
+  formato = NULL,
+  nota = NULL
 )
 }
 \arguments{

@@ -11,7 +11,8 @@ duracao_em_dias(
   quantidade_dias_referencia = NULL,
   variavelIdentificador = NULL,
   valoresPadrao = NULL,
-  formato = NULL
+  formato = NULL,
+  nota = NULL
 )
 }
 \arguments{

@@ -1,8 +1,8 @@
 #***
 #SCRIPT MAE INTERFACES
 
+library(devtools)
 
-#' @export
 retorna_interfaces_funcoes <- function(arquivos) {
 
    if(length(arquivos) == 0)
@@ -103,28 +103,33 @@ interface <- function(nomeInterface = NULL, caule = FALSE) {
 
        print("3")
        print(scripts$arquivos[i])
-       print(getwd()) 
+       print(getwd())
        source(scripts$arquivos[i], local = globalenv())
-      
+
        setwd(diretorio_base_ou_raiz)
     }
 
   }
-  
-  
+
+
   if(caule) {
-    
+
     setwd(diretorioCaule)
-      
+
     code <- readLines('code.R')
-    
-    for(i in 1:length(code)) { 
-      
-      code[i] <- substring(code[i], 2, nchar(code[i])) 
-      
+
+    for(i in 1:length(code)) {
+
+      code[i] <- substring(code[i], 2, nchar(code[i]))
+
     }
-    
-    writeLines(code, 'code.R')
+
+    if(!('PEpCenteias' %in% list.files(path = '..')))
+      devtools::create('../PEpCenteias')
+
+    file.remove('code.R')
+    write(code, '../PEpCenteias/R/code.R')
+
   }
 
 

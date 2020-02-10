@@ -1,0 +1,22 @@
+---data: 2020-02-09 20:14:35 ---autor:  ---comando:
+---nota: testando log orientado a notas que nao entra no loop do encapsulamento da funcao
+completitude_variaveis_de_uma_tabela(dengue2013, nota = 'testando log orientado a notas que nao entra no loop do encapsulamento da funcao')
+---data: 2020-02-09 20:44:51 ---autor:  ---comando:
+---nota: testando encapsulamento total
+View(consistencia_variavel_conjunto)
+View(duracao_em_dias)
+View(extratificacaoIdade)
+View(porcentagem_verdadeiro_positivo)
+View(quantidade_de_observacoes)
+View(quantidade_para_cada_observacao)
+View(representatividade)
+View(representatividadeCondicionada)
+View(tabela_variaveis_avaliacao)
+View(validade)
+View(valores_em_branco_para_NA)
+View(verificaNas)
+source('biblioteca.R')
+verificaNas('oie', nota = 'testando encapsulamento total')
+View(verificaNas)
+View(auxVerNas)
+verificaNas(dengue2013, nota = 'testando encapsulamento total')

@@ -4,7 +4,7 @@
 \alias{quantidade_para_cada_observacao}
 \title{quantidade_para_cada_observacao}
 \usage{
-quantidade_para_cada_observacao(coluna, valoresPadrao = NULL)
+quantidade_para_cada_observacao(coluna, valoresPadrao = NULL, nota = NULL)
 }
 \arguments{
 \item{valoresPadrao}{o conjunto de fatores que sera considerado para realizar a operacao}

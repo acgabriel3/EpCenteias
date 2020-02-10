@@ -8,7 +8,8 @@ tabela_variaveis_avaliacao(
   variavelBase,
   variavel,
   funcao,
-  valoresPadrao = NULL
+  valoresPadrao = NULL,
+  nota = NULL
 )
 }
 \arguments{

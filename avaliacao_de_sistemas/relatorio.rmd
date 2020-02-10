@@ -1,0 +1,9 @@
+---
+title: "relatorio"
+output: html_notebook
+---
+
+
+```{r}
+definirParagrafo('teste')
+```

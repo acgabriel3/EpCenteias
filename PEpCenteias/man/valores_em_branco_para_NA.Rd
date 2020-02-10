@@ -4,7 +4,7 @@
 \alias{valores_em_branco_para_NA}
 \title{valores_em_branco_para_NA}
 \usage{
-valores_em_branco_para_NA(variavel)
+valores_em_branco_para_NA(variavel, nota = NULL)
 }
 \arguments{
 \item{um}{vetor sobre o qual sera realizada a operacao}

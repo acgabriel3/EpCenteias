@@ -8,7 +8,8 @@ representatividadeCondicionada(
   colunaFiltro,
   valoresFiltro,
   colunaAlvo,
-  valoresPadrao
+  valoresPadrao,
+  nota = NULL
 )
 }
 \arguments{

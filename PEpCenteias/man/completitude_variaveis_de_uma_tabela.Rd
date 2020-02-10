@@ -4,7 +4,7 @@
 \alias{completitude_variaveis_de_uma_tabela}
 \title{completitude_variaveis_de_uma_tabela}
 \usage{
-completitude_variaveis_de_uma_tabela(tabela, registrar = FALSE, log = TRUE)
+completitude_variaveis_de_uma_tabela(tabela, registrar = FALSE, nota = NULL)
 }
 \arguments{
 \item{tabela}{um dataframe sobre o qual sera realizada a operacao}

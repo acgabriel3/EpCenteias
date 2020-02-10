@@ -10,7 +10,8 @@ consistencia_variavel_conjunto(
   colunasB,
   valores_padrao_A,
   valores_padrao_B,
-  diferenca = FALSE
+  diferenca = FALSE,
+  nota = NULL
 )
 }
 \arguments{

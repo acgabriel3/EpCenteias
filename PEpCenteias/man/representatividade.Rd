@@ -4,7 +4,7 @@
 \alias{representatividade}
 \title{representatividade}
 \usage{
-representatividade(variavel, valoresPadrao)
+representatividade(variavel, valoresPadrao, nota = NULL)
 }
 \arguments{
 \item{variavel}{a variavel de um dataframe que contenha valores categoricos (fatores)}
